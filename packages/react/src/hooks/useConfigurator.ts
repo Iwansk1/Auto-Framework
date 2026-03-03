@@ -1,10 +1,9 @@
-import { Vehicle } from "@automotive/core";
 import { useVehicleContext } from "../context/VehicleContext";
-import { use } from "react";
 
 export function useConfigurator() {
     const {
         configuration,
+        configurationOptions,
         startConfiguration,
         selectColor,
         selectWheels,
@@ -12,14 +11,18 @@ export function useConfigurator() {
     } = useVehicleContext();
 
     const isPackageSelected = (packageId: string): boolean =>
-        configuration?.selectedPackages?.some((p) => p.id === packageId) ||
+        configuration?.selectedPackages.some((p) => p.id === packageId) ??
         false;
 
-    const isColorSelected = (colorId: string): boolean =>
-        configuration?.selectedColor?.id === colorId || false;
+    const isColorSelected = (colorId: string): boolean => {
+        if (!configuration?.selectedColor) return false;
+        return configuration.selectedColor.id === colorId;
+    };
 
-    const isWheelsSelected = (wheelId: string): boolean =>
-        configuration?.selectedWheels?.id === wheelId || false;
+    const isWheelsSelected = (wheelId: string): boolean => {
+        if (!configuration?.selectedWheels) return false;
+        return configuration.selectedWheels.id === wheelId;
+    };
 
     const formattedPrice = configuration
         ? new Intl.NumberFormat("nl-NL", {
@@ -30,6 +33,7 @@ export function useConfigurator() {
 
     return {
         configuration,
+        configuratorOptions: configurationOptions,
         startConfiguration,
         selectColor,
         selectWheels,

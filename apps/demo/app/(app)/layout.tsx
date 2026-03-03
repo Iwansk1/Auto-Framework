@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Nav } from "./components/Nav";
-import { getVehicles } from "../../lib/getVehicles";
+import { getVehicles } from "@/lib/getVehicles";
+import { getConfiguratorOptions } from "@/lib/getConfiguratorOptions";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -25,14 +26,20 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const vehicles = await getVehicles();
+    const [vehicles, configuratorOptions] = await Promise.all([
+        getVehicles(),
+        getConfiguratorOptions(),
+    ]);
 
     return (
         <html lang="en">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <Providers vehicles={vehicles}>
+                <Providers
+                    vehicles={vehicles}
+                    configuratorOptions={configuratorOptions}
+                >
                     <Nav />
                     <main>{children}</main>
                 </Providers>

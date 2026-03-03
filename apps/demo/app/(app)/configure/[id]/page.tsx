@@ -14,6 +14,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
 
     const {
         configuration,
+        configuratorOptions,
         startConfiguration,
         selectColor,
         selectWheels,
@@ -71,83 +72,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
             </div>
         );
     }
-
-    const colors = [
-        {
-            id: "black",
-            name: "Midnight Black",
-            hex: "#1a1a1a",
-            priceModifier: 0,
-        },
-        { id: "white", name: "Alpine White", hex: "#f5f5f5", priceModifier: 0 },
-        {
-            id: "blue",
-            name: "Portimao Blue",
-            hex: "#2d4a7a",
-            priceModifier: 750,
-        },
-        {
-            id: "red",
-            name: "Melbourne Red",
-            hex: "#c0392b",
-            priceModifier: 750,
-        },
-        {
-            id: "green",
-            name: "Isle of Man Green",
-            hex: "#2d6a4f",
-            priceModifier: 1200,
-        },
-    ];
-
-    const wheels = [
-        {
-            id: "standard",
-            name: 'Standard 18"',
-            sizeInch: 18,
-            priceModifier: 0,
-        },
-        { id: "sport", name: 'Sport 19"', sizeInch: 19, priceModifier: 800 },
-        {
-            id: "performance",
-            name: 'Performance 20"',
-            sizeInch: 20,
-            priceModifier: 1500,
-        },
-    ];
-
-    const packages = [
-        {
-            id: "comfort",
-            name: "Comfort Package",
-            description: "Enhanced comfort for long journeys",
-            features: [
-                "Heated seats",
-                "Heated steering wheel",
-                "Parking sensors",
-            ],
-            priceModifier: 1800,
-        },
-        {
-            id: "technology",
-            name: "Technology Package",
-            description: "Latest driver assistance systems",
-            features: [
-                "Lane assist",
-                "Blind spot detection",
-                "Head-up display",
-            ],
-            priceModifier: 2400,
-        },
-        {
-            id: "sport",
-            name: "Sport Package",
-            description: "Track-focused upgrades",
-            features: ["Sport exhaust", "Carbon trim", "Sport suspension"],
-            priceModifier: 3200,
-        },
-    ];
-
+    const { colors, wheels, packages } = configuratorOptions;
     return (
         <div
             style={{

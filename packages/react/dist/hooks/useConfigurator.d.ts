@@ -1,7 +1,7 @@
-import { Vehicle } from "@automotive/core";
 export declare function useConfigurator(): {
     configuration: import("@automotive/core").VehicleConfiguration | null;
-    startConfiguration: (vehicle: Vehicle) => void;
+    configuratorOptions: import("@automotive/core").ConfiguratorOptions;
+    startConfiguration: (vehicle: import("@automotive/core").Vehicle) => void;
     selectColor: (colorId: string) => void;
     selectWheels: (wheelId: string) => void;
     togglePackage: (packageId: string) => void;

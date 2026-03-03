@@ -70,6 +70,9 @@ export interface Config {
         users: User;
         media: Media;
         vehicles: PayloadVehicle;
+        colors: PayloadColor;
+        wheels: PayloadWheel;
+        packages: PayloadPackage;
         "payload-kv": PayloadKv;
         "payload-locked-documents": PayloadLockedDocument;
         "payload-preferences": PayloadPreference;
@@ -345,6 +348,34 @@ export interface PayloadVehicle {
         fuelEfficiency: number;
         range: number;
     };
+    updatedAt: string;
+    createdAt: string;
+}
+
+export interface PayloadColor {
+    id: string;
+    name: string;
+    hex: string;
+    priceModifier: number;
+    updatedAt: string;
+    createdAt: string;
+}
+
+export interface PayloadWheel {
+    id: string;
+    name: string;
+    sizeInch: number;
+    priceModifier: number;
+    updatedAt: string;
+    createdAt: string;
+}
+
+export interface PayloadPackage {
+    id: string;
+    name: string;
+    description: string;
+    features?: { feature: string; id?: string | null }[] | null;
+    priceModifier: number;
     updatedAt: string;
     createdAt: string;
 }

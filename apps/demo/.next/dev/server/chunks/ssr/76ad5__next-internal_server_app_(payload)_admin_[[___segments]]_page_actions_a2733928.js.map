@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/iwanb/Desktop/School/Jaar4/automotive-framework/apps/demo/.next-internal/server/app/%28payload%29/admin/%5B%5B...segments%5D%5D/page/actions.js%20%28server%20actions%20loader%29"],"sourcesContent":["export {$$RSC_SERVER_ACTION_0 as '409538dad3c85b1bdd6530b309f5ec0fb831170fb7'} from 'ACTIONS_MODULE0'\nexport {$$RSC_SERVER_ACTION_0 as '60694dc15ea218f3bc5544ceb2bcd8addf27805f5e'} from 'ACTIONS_MODULE1'\n"],"names":[],"mappings":";AAAA;AACA"}}]
-}

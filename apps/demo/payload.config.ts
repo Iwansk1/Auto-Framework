@@ -6,6 +6,9 @@ import { fileURLToPath } from "url";
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Vehicles } from "./collections/Vehicles";
+import { Colors } from "./collections/Colors";
+import { Wheels } from "./collections/Wheels";
+import { Packages } from "./collections/Packages";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -17,7 +20,7 @@ export default buildConfig({
             baseDir: path.resolve(dirname),
         },
     },
-    collections: [Users, Media, Vehicles],
+    collections: [Users, Media, Vehicles, Colors, Wheels, Packages],
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || "",
     typescript: {
