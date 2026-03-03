@@ -1,0 +1,1 @@
+{"version":3,"file":"ScoringStrategy.d.ts","sourceRoot":"","sources":["../../src/strategies/ScoringStrategy.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,mBAAmB,CAAC;AAE5C,MAAM,WAAW,eAAe;IAC5B,IAAI,EAAE,MAAM,CAAC;IACb,WAAW,EAAE,MAAM,CAAC;IACpB,KAAK,CAAC,OAAO,EAAE,OAAO,GAAG,MAAM,CAAC;CACnC"}

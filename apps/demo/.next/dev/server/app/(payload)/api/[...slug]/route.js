@@ -1,0 +1,12 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/(payload)/api/[...slug]/route.js")
+R.c("server/chunks/[externals]_next_dist_compiled_@vercel_og_index_node_b0db6b07.js")
+R.c("server/chunks/558a0_next_f4d782e5._.js")
+R.c("server/chunks/26d36_@payloadcms_richtext-lexical_dist_bf87c12e._.js")
+R.c("server/chunks/26d36_lexical_Lexical_dev_mjs_7ca144dc._.js")
+R.c("server/chunks/26d36_@payloadcms_ui_dist_0dfb851d._.js")
+R.c("server/chunks/[root-of-the-server]__a365a9f7._.js")
+R.c("server/chunks/[root-of-the-server]__69dbbb99._.js")
+R.c("server/chunks/26d36_@payloadcms_next_dist_prod_styles_845dbe5b.css")
+R.c("server/chunks/024a4_demo__next-internal_server_app_(payload)_api_[___slug]_route_actions_8963d607.js")
+R.m("[project]/Jaar4/automotive-framework/apps/demo/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/Jaar4/automotive-framework/apps/demo/app/(payload)/api/[...slug]/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/Jaar4/automotive-framework/apps/demo/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/Jaar4/automotive-framework/apps/demo/app/(payload)/api/[...slug]/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports
