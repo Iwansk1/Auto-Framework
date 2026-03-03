@@ -135,6 +135,7 @@ function VehicleProvider({ children, vehicles, configurationOptions = defaultCon
         removeVehicleFromComparison,
         setStrategy,
         configuration,
+        configurationOptions,
         startConfiguration,
         selectColor,
         selectWheels,
@@ -145,6 +146,7 @@ function VehicleProvider({ children, vehicles, configurationOptions = defaultCon
         comparisonResult,
         activeStrategy,
         configuration,
+        configurationOptions,
     ]);
     return ((0, jsx_runtime_1.jsx)(VehicleContext.Provider, { value: value, children: children }));
 }

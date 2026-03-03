@@ -28,6 +28,7 @@ interface VehicleContextValue {
     selectColor: (colorId: string) => void;
     selectWheels: (wheelId: string) => void;
     togglePackage: (packageId: string) => void;
+    configurationOptions: ConfiguratorOptions;
 }
 const VehicleContext = createContext<VehicleContextValue | null>(null);
 
@@ -202,6 +203,7 @@ export function VehicleProvider({
             removeVehicleFromComparison,
             setStrategy,
             configuration,
+            configurationOptions,
             startConfiguration,
             selectColor,
             selectWheels,
@@ -213,6 +215,7 @@ export function VehicleProvider({
             comparisonResult,
             activeStrategy,
             configuration,
+            configurationOptions,
         ],
     );
 

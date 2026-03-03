@@ -13,6 +13,7 @@ interface VehicleContextValue {
     selectColor: (colorId: string) => void;
     selectWheels: (wheelId: string) => void;
     togglePackage: (packageId: string) => void;
+    configurationOptions: ConfiguratorOptions;
 }
 interface VehicleProviderProps {
     children: React.ReactNode;
