@@ -73,6 +73,7 @@ export interface Config {
         colors: PayloadColor;
         wheels: PayloadWheel;
         packages: PayloadPackage;
+        occasions: PayloadOccasion;
         "payload-kv": PayloadKv;
         "payload-locked-documents": PayloadLockedDocument;
         "payload-preferences": PayloadPreference;
@@ -376,6 +377,30 @@ export interface PayloadPackage {
     description: string;
     features?: { feature: string; id?: string | null }[] | null;
     priceModifier: number;
+    updatedAt: string;
+    createdAt: string;
+}
+
+export interface PayloadOccasion {
+    id: string;
+    make: string;
+    model: string;
+    year: number;
+    askingPrice: number;
+    mileage: number;
+    colour: string;
+    transmission: "automatic" | "manual";
+    condition: "new" | "used" | "demo";
+    features?: { feature: string; id?: string | null }[] | null;
+    images?:
+        | {
+              image: string | Media;
+              caption?: string | null;
+              id?: string | null;
+          }[]
+        | null;
+    description?: string | null;
+    available: boolean;
     updatedAt: string;
     createdAt: string;
 }
