@@ -1,6 +1,7 @@
 export * from "./models/Vehicle";
 export * from "./models/Configuration";
 export * from "./models/Occasion";
+export * from "./models/Adapter";
 export * from "./strategies/ScoringStrategy";
 export * from "./strategies/PerformanceScoringStrategy";
 export * from "./strategies/EfficiencyScoringStrategy";
