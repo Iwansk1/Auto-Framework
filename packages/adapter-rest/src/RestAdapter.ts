@@ -153,7 +153,7 @@ export class RestAdapter implements AutomotiveAdapter {
     async getConfiguratorOptions(): Promise<ConfiguratorOptions> {
         const [coloursResult, wheelsResult, packagesResult] = await Promise.all(
             [
-                this.fetch<RestColour>("/api/colours?limit=50"),
+                this.fetch<RestColour>("/api/colors?limit=50"),
                 this.fetch<RestWheel>("/api/wheels?limit=50"),
                 this.fetch<RestPackage>("/api/packages?limit=50"),
             ],
