@@ -87,16 +87,49 @@ export const Occasions: CollectionConfig = {
         },
         // Free text Features
         {
+            name: "featuresText",
+            type: "textarea",
+            admin: {
+                description:
+                    "Type one feature per line. Each line becomes a separate bullet point on the website.",
+            },
+            hooks: {
+                afterRead: [
+                    ({ siblingData }) => {
+                        if (siblingData?.features?.length > 0) {
+                            return siblingData.features
+                                .map((f: { feature: string }) => f.feature)
+                                .join("\n");
+                        }
+                        return "";
+                    },
+                ],
+                beforeChange: [
+                    ({ value, siblingData }) => {
+                        if (typeof value === "string") {
+                            siblingData.features = value
+                                .split("\n")
+                                .map((line: string) => line.trim())
+                                .filter((line: string) => line.length > 0)
+                                .map((line: string) => ({ feature: line }));
+                        }
+                        return value;
+                    },
+                ],
+            },
+        },
+        // Stores the parsed features — hidden from admin UI
+        {
             name: "features",
             type: "array",
             admin: {
-                description: "Add any features this car has",
+                hidden: true,
             },
             fields: [
                 {
                     name: "feature",
                     type: "text",
-                    required: true,
+                    required: false,
                 },
             ],
         },

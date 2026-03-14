@@ -15,6 +15,10 @@ export function Nav() {
             label: "Compare",
             count: selectedVehicles.length,
         },
+        {
+            href: "/occasions",
+            label: "Occasions",
+        },
     ];
 
     return (
