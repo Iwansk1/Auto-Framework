@@ -89,7 +89,7 @@ export function VehicleCard({
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
                     gap: "12px",
-                    margin: 0,
+                    marginBottom: "16px",
                 }}
             >
                 {[
