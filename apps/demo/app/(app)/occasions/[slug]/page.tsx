@@ -1,25 +1,23 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useOccasions } from "@automotive/react";
+import { ContactForm } from "../../components/ContactForm";
 
 interface OccasionDetailPageProps {
     params: Promise<{ slug: string }>;
 }
 
-export default function OccasionDetailPage({
-    params,
-}: OccasionDetailPageProps) {
+export default function OccasionDetailPage({ params }: OccasionDetailPageProps) {
     const { slug } = use(params);
-
-    // get ID from the slug
     const id = slug.split("-").pop();
 
     const { occasions, formattedPrice, formattedMileage } = useOccasions();
-
     const occasion = occasions.find((o) => o.id === id);
+
+    const [activeImage, setActiveImage] = useState(0);
 
     if (!occasion) {
         return (
@@ -31,20 +29,19 @@ export default function OccasionDetailPage({
                     textAlign: "center",
                 }}
             >
-                <h1
-                    style={{ color: "var(--color-text)", marginBottom: "16px" }}
-                >
-                    Occasion not found
-                </h1>
-                <Link
-                    href="/occasions"
-                    style={{ color: "var(--color-accent)" }}
-                >
+                <h1 style={{ color: "var(--color-text)", marginBottom: "16px" }}>Occasion not found</h1>
+                <Link href="/occasions" style={{ color: "var(--color-accent)" }}>
                     Back to occasions
                 </Link>
             </div>
         );
     }
+
+    const images = occasion.images;
+    const hasImages = images.length > 0;
+
+    const prev = () => setActiveImage((i) => (i === 0 ? images.length - 1 : i - 1));
+    const next = () => setActiveImage((i) => (i === images.length - 1 ? 0 : i + 1));
 
     return (
         <div
@@ -80,7 +77,7 @@ export default function OccasionDetailPage({
             >
                 {/* Left column — images + details */}
                 <div>
-                    {/* Main image */}
+                    {/* Main image with arrows */}
                     <div
                         style={{
                             position: "relative",
@@ -91,13 +88,106 @@ export default function OccasionDetailPage({
                             marginBottom: "12px",
                         }}
                     >
-                        {occasion.images.length > 0 ? (
-                            <Image
-                                src={occasion.images[0].url}
-                                alt={`${occasion.make} ${occasion.model}`}
-                                fill
-                                style={{ objectFit: "cover" }}
-                            />
+                        {hasImages ? (
+                            <>
+                                <Image
+                                    src={images[activeImage].url}
+                                    alt={images[activeImage].caption ?? `${occasion.make} ${occasion.model}`}
+                                    fill
+                                    style={{ objectFit: "cover" }}
+                                    sizes="(max-width: 1280px) 60vw, 720px"
+                                />
+                                <div
+                                    style={{
+                                        position: "absolute",
+                                        bottom: "16px",
+                                        right: "16px",
+                                        background: "rgba(0,0,0,0.6)",
+                                        color: "#fff",
+                                        fontSize: "0.8rem",
+                                        padding: "4px 10px",
+                                        borderRadius: "20px",
+                                    }}
+                                >
+                                    {activeImage + 1} / {images.length}
+                                </div>
+
+                                {/* Condition badge */}
+                                <span
+                                    style={{
+                                        position: "absolute",
+                                        top: "16px",
+                                        left: "16px",
+                                        background:
+                                            occasion.condition === "new"
+                                                ? "#2d6a4f"
+                                                : occasion.condition === "demo"
+                                                  ? "#2d4a7a"
+                                                  : "var(--color-carbon)",
+                                        color: "#fff",
+                                        fontSize: "0.75rem",
+                                        fontWeight: 700,
+                                        letterSpacing: "0.08em",
+                                        textTransform: "uppercase",
+                                        padding: "5px 12px",
+                                        borderRadius: "4px",
+                                    }}
+                                >
+                                    {occasion.condition}
+                                </span>
+
+                                {/* Arrow buttons — only show if more than one image */}
+                                {images.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={prev}
+                                            aria-label="Previous image"
+                                            style={{
+                                                position: "absolute",
+                                                left: "12px",
+                                                top: "50%",
+                                                transform: "translateY(-50%)",
+                                                background: "rgba(0,0,0,0.5)",
+                                                border: "none",
+                                                borderRadius: "50%",
+                                                width: "40px",
+                                                height: "40px",
+                                                color: "#fff",
+                                                fontSize: "1.1rem",
+                                                cursor: "pointer",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            ‹
+                                        </button>
+                                        <button
+                                            onClick={next}
+                                            aria-label="Next image"
+                                            style={{
+                                                position: "absolute",
+                                                right: "12px",
+                                                top: "50%",
+                                                transform: "translateY(-50%)",
+                                                background: "rgba(0,0,0,0.5)",
+                                                border: "none",
+                                                borderRadius: "50%",
+                                                width: "40px",
+                                                height: "40px",
+                                                color: "#fff",
+                                                fontSize: "1.1rem",
+                                                cursor: "pointer",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            ›
+                                        </button>
+                                    </>
+                                )}
+                            </>
                         ) : (
                             <div
                                 style={{
@@ -111,58 +201,29 @@ export default function OccasionDetailPage({
                                 No image available
                             </div>
                         )}
-                        <span
-                            style={{
-                                position: "absolute",
-                                top: "16px",
-                                left: "16px",
-                                background:
-                                    occasion.condition === "new"
-                                        ? "#2d6a4f"
-                                        : occasion.condition === "demo"
-                                          ? "#2d4a7a"
-                                          : "var(--color-carbon)",
-                                color: "#fff",
-                                fontSize: "0.75rem",
-                                fontWeight: 700,
-                                letterSpacing: "0.08em",
-                                textTransform: "uppercase",
-                                padding: "5px 12px",
-                                borderRadius: "4px",
-                            }}
-                        >
-                            {occasion.condition}
-                        </span>
                     </div>
-
                     {/* Thumbnail strip */}
-                    {occasion.images.length > 1 && (
-                        <div
-                            style={{
-                                display: "flex",
-                                gap: "8px",
-                                marginBottom: "32px",
-                            }}
-                        >
-                            {occasion.images.slice(1).map((img, i) => (
-                                <div
+                    {images.length > 1 && (
+                        <div style={{ display: "flex", gap: "8px", marginBottom: "32px", flexWrap: "wrap" }}>
+                            {images.map((img, i) => (
+                                <button
                                     key={i}
+                                    onClick={() => setActiveImage(i)}
+                                    aria-label={`View image ${i + 1}`}
                                     style={{
                                         position: "relative",
-                                        width: "100px",
-                                        height: "70px",
+                                        width: "80px",
+                                        height: "60px",
                                         borderRadius: "6px",
                                         overflow: "hidden",
-                                        border: "1px solid var(--color-border)",
+                                        border: i === activeImage ? "2px solid var(--color-accent)" : "2px solid transparent",
+                                        cursor: "pointer",
+                                        padding: 0,
+                                        background: "var(--color-surface)",
                                     }}
                                 >
-                                    <Image
-                                        src={img.url}
-                                        alt={img.caption ?? `Photo ${i + 2}`}
-                                        fill
-                                        style={{ objectFit: "cover" }}
-                                    />
-                                </div>
+                                    <Image src={img.url} alt={img.caption ?? `Photo ${i + 1}`} fill style={{ objectFit: "cover" }} />
+                                </button>
                             ))}
                         </div>
                     )}
@@ -208,19 +269,11 @@ export default function OccasionDetailPage({
                                 { label: "Colour", value: occasion.color },
                                 {
                                     label: "Transmission",
-                                    value:
-                                        occasion.transmission
-                                            .charAt(0)
-                                            .toUpperCase() +
-                                        occasion.transmission.slice(1),
+                                    value: occasion.transmission.charAt(0).toUpperCase() + occasion.transmission.slice(1),
                                 },
                                 {
                                     label: "Condition",
-                                    value:
-                                        occasion.condition
-                                            .charAt(0)
-                                            .toUpperCase() +
-                                        occasion.condition.slice(1),
+                                    value: occasion.condition.charAt(0).toUpperCase() + occasion.condition.slice(1),
                                 },
                             ].map((item) => (
                                 <div
@@ -291,8 +344,7 @@ export default function OccasionDetailPage({
                                     <span
                                         key={feature}
                                         style={{
-                                            background:
-                                                "var(--color-accent-dim)",
+                                            background: "var(--color-accent-dim)",
                                             color: "var(--color-accent)",
                                             fontSize: "0.85rem",
                                             padding: "6px 14px",
@@ -369,8 +421,7 @@ export default function OccasionDetailPage({
                                 marginBottom: "24px",
                             }}
                         >
-                            {occasion.year} ·{" "}
-                            {formattedMileage(occasion.mileage)}
+                            {occasion.year} · {formattedMileage(occasion.mileage)}
                         </p>
                         <p
                             style={{
@@ -384,28 +435,8 @@ export default function OccasionDetailPage({
                             {formattedPrice(occasion.askingPrice)}
                         </p>
 
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "12px",
-                            }}
-                        >
-                            <button
-                                style={{
-                                    background: "var(--color-accent)",
-                                    border: "none",
-                                    borderRadius: "8px",
-                                    padding: "14px",
-                                    color: "#000",
-                                    fontWeight: 700,
-                                    fontSize: "0.95rem",
-                                    cursor: "pointer",
-                                    letterSpacing: "0.05em",
-                                }}
-                            >
-                                CONTACT DEALER
-                            </button>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                            <ContactForm occasion={occasion} formattedPrice={formattedPrice(occasion.askingPrice)} />
                             <button
                                 style={{
                                     background: "transparent",
