@@ -1,7 +1,12 @@
 import React from "react";
-import { Vehicle, ComparisonResult, VehicleConfiguration, ConfiguratorOptions, ScoringStrategy } from "@automotive/core";
+import { Vehicle, ComparisonResult, VehicleConfiguration, ConfiguratorOptions, ScoringStrategy, VehicleFilters } from "@automotive/core";
 interface VehicleContextValue {
     vehicles: Vehicle[];
+    filteredVehicles: Vehicle[];
+    filters: VehicleFilters;
+    setFilters: (filters: VehicleFilters) => void;
+    resetFilters: () => void;
+    isFiltered: boolean;
     selectedVehicles: Vehicle[];
     comparisonResult: ComparisonResult | null;
     activeStrategy: ScoringStrategy;

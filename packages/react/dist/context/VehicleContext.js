@@ -77,6 +77,12 @@ const defaultConfigurationOptions = {
     ],
 };
 function VehicleProvider({ children, vehicles, configurationOptions = defaultConfigurationOptions, }) {
+    // Filters
+    const filterService = (0, react_1.useMemo)(() => new core_1.FilterService(), []);
+    const [filters, setFilters] = (0, react_1.useState)({});
+    const filteredVehicles = (0, react_1.useMemo)(() => filterService.filterVehicles(vehicles, filters), [vehicles, filters, filterService]);
+    const resetFilters = () => setFilters({});
+    const isFiltered = filteredVehicles.length !== vehicles.length;
     // Strategies
     const performanceStrategy = (0, react_1.useMemo)(() => new core_1.PerformanceScoringStrategy(), []);
     const efficiencyStrategy = (0, react_1.useMemo)(() => new core_1.EfficiencyScoringStrategy(), []);
@@ -128,6 +134,11 @@ function VehicleProvider({ children, vehicles, configurationOptions = defaultCon
     // Context value
     const value = (0, react_1.useMemo)(() => ({
         vehicles,
+        filteredVehicles,
+        filters,
+        setFilters,
+        resetFilters,
+        isFiltered,
         selectedVehicles,
         comparisonResult,
         activeStrategy,
@@ -142,6 +153,9 @@ function VehicleProvider({ children, vehicles, configurationOptions = defaultCon
         togglePackage,
     }), [
         vehicles,
+        filteredVehicles,
+        filters,
+        isFiltered,
         selectedVehicles,
         comparisonResult,
         activeStrategy,

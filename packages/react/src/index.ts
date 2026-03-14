@@ -6,6 +6,7 @@ export * from "./context/OccasionContext";
 export * from "./hooks/useVehicleComparison";
 export * from "./hooks/useConfigurator";
 export * from "./hooks/useOccasions";
+export * from "./hooks/useVehicleFilter";
 
 // Components
 export * from "./components/VehicleCard";

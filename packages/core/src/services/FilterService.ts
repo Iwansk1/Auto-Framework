@@ -28,11 +28,11 @@ export class FilterService {
     >(items: T[], filters: VehicleFilters): T[] {
         return items.filter((item) => {
             if (filters.search) {
-                const query = filters.search.toLowerCase();
-                const matches =
-                    item.make.toLowerCase().includes(query) ||
-                    item.model.toLowerCase().includes(query);
-                if (!matches) return false;
+                const query = filters.search.toLowerCase().trim();
+
+                const combined = `${item.make} ${item.model}`.toLowerCase();
+
+                if (!combined.includes(query)) return false;
             }
 
             if (filters.category && item.category !== filters.category)
