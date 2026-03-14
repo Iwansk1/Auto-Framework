@@ -9,6 +9,7 @@ import { Vehicles } from "./collections/Vehicles";
 import { Colors } from "./collections/Colors";
 import { Wheels } from "./collections/Wheels";
 import { Packages } from "./collections/Packages";
+import { Occasions } from "./collections/Occasions";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -20,7 +21,7 @@ export default buildConfig({
             baseDir: path.resolve(dirname),
         },
     },
-    collections: [Users, Media, Vehicles, Colors, Wheels, Packages],
+    collections: [Users, Media, Vehicles, Colors, Wheels, Packages, Occasions],
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || "",
     typescript: {
