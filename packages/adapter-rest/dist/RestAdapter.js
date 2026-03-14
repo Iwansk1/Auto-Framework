@@ -61,7 +61,7 @@ class RestAdapter {
     }
     async getConfiguratorOptions() {
         const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
-            this.fetch("/api/colours?limit=50"),
+            this.fetch("/api/colors?limit=50"),
             this.fetch("/api/wheels?limit=50"),
             this.fetch("/api/packages?limit=50"),
         ]);
