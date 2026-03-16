@@ -6,17 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function OccasionsPage() {
-    const {
-        filteredOccasions,
-        filters,
-        updateFilter,
-        resetFilters,
-        formattedPrice,
-        formattedMileage,
-        totalCount,
-        filteredCount,
-        isFiltered,
-    } = useOccasions();
+    const { filteredOccasions, filters, updateFilter, resetFilters, formattedPrice, formattedMileage, totalCount, filteredCount, isFiltered } =
+        useOccasions();
 
     return (
         <div
@@ -40,9 +31,7 @@ export default function OccasionsPage() {
                     Occasions
                 </h1>
                 <p style={{ color: "var(--color-muted)" }}>
-                    {isFiltered
-                        ? `${filteredCount} of ${totalCount} cars match your filters`
-                        : `${totalCount} cars available`}
+                    {isFiltered ? `${filteredCount} of ${totalCount} cars match your filters` : `${totalCount} cars available`}
                 </p>
             </div>
 
@@ -78,9 +67,7 @@ export default function OccasionsPage() {
                         type="text"
                         placeholder="Search make, model..."
                         value={filters.search ?? ""}
-                        onChange={(e) =>
-                            updateFilter("search", e.target.value || undefined)
-                        }
+                        onChange={(e) => updateFilter("search", e.target.value || undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
@@ -113,14 +100,7 @@ export default function OccasionsPage() {
                         type="number"
                         placeholder="e.g. 50000"
                         value={filters.maxPrice ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "maxPrice",
-                                e.target.value
-                                    ? Number(e.target.value)
-                                    : undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("maxPrice", e.target.value ? Number(e.target.value) : undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
@@ -153,14 +133,7 @@ export default function OccasionsPage() {
                         type="number"
                         placeholder="e.g. 100000"
                         value={filters.maxMileage ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "maxMileage",
-                                e.target.value
-                                    ? Number(e.target.value)
-                                    : undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("maxMileage", e.target.value ? Number(e.target.value) : undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
@@ -191,21 +164,14 @@ export default function OccasionsPage() {
                     </label>
                     <select
                         value={filters.transmission ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "transmission",
-                                e.target.value || undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("transmission", e.target.value || undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
                             border: "1px solid var(--color-border)",
                             borderRadius: "8px",
                             padding: "10px 14px",
-                            color: filters.transmission
-                                ? "var(--color-text)"
-                                : "var(--color-muted)",
+                            color: filters.transmission ? "var(--color-text)" : "var(--color-muted)",
                             fontSize: "0.95rem",
                             outline: "none",
                             boxSizing: "border-box",
@@ -233,21 +199,14 @@ export default function OccasionsPage() {
                     </label>
                     <select
                         value={filters.condition ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "condition",
-                                e.target.value || undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("condition", e.target.value || undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
                             border: "1px solid var(--color-border)",
                             borderRadius: "8px",
                             padding: "10px 14px",
-                            color: filters.condition
-                                ? "var(--color-text)"
-                                : "var(--color-muted)",
+                            color: filters.condition ? "var(--color-text)" : "var(--color-muted)",
                             fontSize: "0.95rem",
                             outline: "none",
                             boxSizing: "border-box",
@@ -291,9 +250,7 @@ export default function OccasionsPage() {
                         color: "var(--color-muted)",
                     }}
                 >
-                    <p style={{ fontSize: "1.1rem", marginBottom: "16px" }}>
-                        No occasions match your filters.
-                    </p>
+                    <p style={{ fontSize: "1.1rem", marginBottom: "16px" }}>No occasions match your filters.</p>
                     <button
                         onClick={resetFilters}
                         style={{
@@ -313,15 +270,12 @@ export default function OccasionsPage() {
                 <div
                     style={{
                         display: "grid",
-                        gridTemplateColumns:
-                            "repeat(auto-fill, minmax(360px, 1fr))",
+                        gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))",
                         gap: "24px",
                     }}
                 >
                     {filteredOccasions.map((occasion) => {
-                        const slug = `${occasion.make}-${occasion.model}`
-                            .toLowerCase()
-                            .replace(/\s+/g, "-");
+                        const slug = `${occasion.make}-${occasion.model}`.toLowerCase().replace(/\s+/g, "-");
 
                         return (
                             <div
@@ -372,8 +326,7 @@ export default function OccasionsPage() {
                                             background:
                                                 occasion.condition === "new"
                                                     ? "#2d6a4f"
-                                                    : occasion.condition ===
-                                                        "demo"
+                                                    : occasion.condition === "demo"
                                                       ? "#2d4a7a"
                                                       : "var(--color-carbon)",
                                             color: "#fff",
@@ -394,8 +347,7 @@ export default function OccasionsPage() {
                                     <div style={{ marginBottom: "16px" }}>
                                         <h2
                                             style={{
-                                                fontFamily:
-                                                    "var(--font-display)",
+                                                fontFamily: "var(--font-display)",
                                                 fontSize: "1.3rem",
                                                 fontWeight: 700,
                                                 color: "var(--color-text)",
@@ -411,9 +363,7 @@ export default function OccasionsPage() {
                                                 fontWeight: 700,
                                             }}
                                         >
-                                            {formattedPrice(
-                                                occasion.askingPrice,
-                                            )}
+                                            {formattedPrice(occasion.askingPrice)}
                                         </p>
                                     </div>
 
@@ -436,23 +386,15 @@ export default function OccasionsPage() {
                                             },
                                             {
                                                 label: "Mileage",
-                                                value: formattedMileage(
-                                                    occasion.mileage,
-                                                ),
+                                                value: formattedMileage(occasion.mileage),
                                             },
                                             {
                                                 label: "Transmission",
-                                                value:
-                                                    occasion.transmission
-                                                        .charAt(0)
-                                                        .toUpperCase() +
-                                                    occasion.transmission.slice(
-                                                        1,
-                                                    ),
+                                                value: occasion.transmission.charAt(0).toUpperCase() + occasion.transmission.slice(1),
                                             },
                                             {
                                                 label: "Color",
-                                                value: occasion.color,
+                                                value: occasion.color ?? "—",
                                             },
                                         ].map((stat) => (
                                             <div key={stat.label}>
@@ -461,8 +403,7 @@ export default function OccasionsPage() {
                                                         display: "block",
                                                         color: "var(--color-muted)",
                                                         fontSize: "0.7rem",
-                                                        textTransform:
-                                                            "uppercase",
+                                                        textTransform: "uppercase",
                                                         letterSpacing: "0.05em",
                                                     }}
                                                 >
@@ -491,28 +432,21 @@ export default function OccasionsPage() {
                                                     gap: "6px",
                                                 }}
                                             >
-                                                {occasion.features
-                                                    .slice(0, 4)
-                                                    .map((feature) => (
-                                                        <span
-                                                            key={feature}
-                                                            style={{
-                                                                background:
-                                                                    "var(--color-accent-dim)",
-                                                                color: "var(--color-accent)",
-                                                                fontSize:
-                                                                    "0.75rem",
-                                                                padding:
-                                                                    "3px 10px",
-                                                                borderRadius:
-                                                                    "4px",
-                                                            }}
-                                                        >
-                                                            {feature}
-                                                        </span>
-                                                    ))}
-                                                {occasion.features.length >
-                                                    4 && (
+                                                {occasion.features.slice(0, 4).map((feature) => (
+                                                    <span
+                                                        key={feature}
+                                                        style={{
+                                                            background: "var(--color-accent-dim)",
+                                                            color: "var(--color-accent)",
+                                                            fontSize: "0.75rem",
+                                                            padding: "3px 10px",
+                                                            borderRadius: "4px",
+                                                        }}
+                                                    >
+                                                        {feature}
+                                                    </span>
+                                                ))}
+                                                {occasion.features.length > 4 && (
                                                     <span
                                                         style={{
                                                             color: "var(--color-muted)",
@@ -520,10 +454,7 @@ export default function OccasionsPage() {
                                                             padding: "3px 6px",
                                                         }}
                                                     >
-                                                        +
-                                                        {occasion.features
-                                                            .length - 4}{" "}
-                                                        more
+                                                        +{occasion.features.length - 4} more
                                                     </span>
                                                 )}
                                             </div>
