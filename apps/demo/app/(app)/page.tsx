@@ -5,20 +5,10 @@ import { VehicleCard } from "@automotive/react";
 import Image from "next/image";
 
 export default function HomePage() {
-    const { isSelected, canAddMore, toggleVehicle, selectedVehicles } =
-        useVehicleComparison();
+    const { isSelected, canAddMore, toggleVehicle, selectedVehicles } = useVehicleComparison();
 
-    const {
-        filteredVehicles,
-        filters,
-        updateFilter,
-        resetFilters,
-        isFiltered,
-        availableCategories,
-        availableFuelTypes,
-        totalCount,
-        filteredCount,
-    } = useVehicleFilter();
+    const { filteredVehicles, filters, updateFilter, resetFilters, isFiltered, availableCategories, availableFuelTypes, totalCount, filteredCount } =
+        useVehicleFilter();
 
     const fuelTypeColor: Record<string, string> = {
         electric: "#34d399",
@@ -49,9 +39,7 @@ export default function HomePage() {
                     Vehicle Catalogue
                 </h1>
                 <p style={{ color: "var(--color-muted)" }}>
-                    {isFiltered
-                        ? `${filteredCount} of ${totalCount} vehicles match your filters`
-                        : `${totalCount} vehicles available`}
+                    {isFiltered ? `${filteredCount} of ${totalCount} vehicles match your filters` : `${totalCount} vehicles available`}
                 </p>
             </div>
 
@@ -87,9 +75,7 @@ export default function HomePage() {
                         type="text"
                         placeholder="Search make, model..."
                         value={filters.search ?? ""}
-                        onChange={(e) =>
-                            updateFilter("search", e.target.value || undefined)
-                        }
+                        onChange={(e) => updateFilter("search", e.target.value || undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
@@ -120,21 +106,14 @@ export default function HomePage() {
                     </label>
                     <select
                         value={filters.category ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "category",
-                                e.target.value || undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("category", e.target.value || undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
                             border: "1px solid var(--color-border)",
                             borderRadius: "8px",
                             padding: "10px 14px",
-                            color: filters.category
-                                ? "var(--color-text)"
-                                : "var(--color-muted)",
+                            color: filters.category ? "var(--color-text)" : "var(--color-muted)",
                             fontSize: "0.95rem",
                             outline: "none",
                             boxSizing: "border-box",
@@ -165,21 +144,14 @@ export default function HomePage() {
                     </label>
                     <select
                         value={filters.fuelType ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "fuelType",
-                                e.target.value || undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("fuelType", e.target.value || undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
                             border: "1px solid var(--color-border)",
                             borderRadius: "8px",
                             padding: "10px 14px",
-                            color: filters.fuelType
-                                ? "var(--color-text)"
-                                : "var(--color-muted)",
+                            color: filters.fuelType ? "var(--color-text)" : "var(--color-muted)",
                             fontSize: "0.95rem",
                             outline: "none",
                             boxSizing: "border-box",
@@ -212,14 +184,7 @@ export default function HomePage() {
                         type="number"
                         placeholder="e.g. 80000"
                         value={filters.maxPrice ?? ""}
-                        onChange={(e) =>
-                            updateFilter(
-                                "maxPrice",
-                                e.target.value
-                                    ? Number(e.target.value)
-                                    : undefined,
-                            )
-                        }
+                        onChange={(e) => updateFilter("maxPrice", e.target.value ? Number(e.target.value) : undefined)}
                         style={{
                             width: "100%",
                             background: "var(--color-surface)",
@@ -265,9 +230,7 @@ export default function HomePage() {
                         color: "var(--color-muted)",
                     }}
                 >
-                    <p style={{ fontSize: "1.1rem", marginBottom: "16px" }}>
-                        No vehicles match your filters.
-                    </p>
+                    <p style={{ fontSize: "1.1rem", marginBottom: "16px" }}>No vehicles match your filters.</p>
                     <button
                         onClick={resetFilters}
                         style={{
@@ -289,11 +252,9 @@ export default function HomePage() {
                     <div
                         style={{
                             display: "grid",
-                            gridTemplateColumns:
-                                "repeat(auto-fill, minmax(320px, 1fr))",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
                             gap: "24px",
-                            marginBottom:
-                                selectedVehicles.length > 0 ? "120px" : "0",
+                            marginBottom: selectedVehicles.length > 0 ? "120px" : "0",
                         }}
                     >
                         {filteredVehicles.map((v) => (
@@ -309,8 +270,7 @@ export default function HomePage() {
                                                 borderRadius: "10px",
                                                 overflow: "hidden",
                                                 marginBottom: "16px",
-                                                backgroundColor:
-                                                    "var(--color-surface)",
+                                                backgroundColor: "var(--color-surface)",
                                                 position: "relative",
                                             }}
                                         >
@@ -327,10 +287,7 @@ export default function HomePage() {
                                 renderBadge={(vehicle) => (
                                     <span
                                         style={{
-                                            background:
-                                                fuelTypeColor[
-                                                    vehicle.fuelType
-                                                ] ?? "#888",
+                                            background: fuelTypeColor[vehicle.fuelType] ?? "#888",
                                             color: "#000",
                                             fontSize: "0.7rem",
                                             fontWeight: 700,
@@ -345,58 +302,32 @@ export default function HomePage() {
                                     </span>
                                 )}
                                 renderActions={(vehicle) => (
-                                    <div
-                                        style={{ display: "flex", gap: "8px" }}
-                                    >
+                                    <div style={{ display: "flex", gap: "8px" }}>
                                         <button
-                                            onClick={() =>
-                                                toggleVehicle(vehicle)
-                                            }
-                                            disabled={
-                                                !isSelected(vehicle.id) &&
-                                                !canAddMore
-                                            }
-                                            aria-pressed={isSelected(
-                                                vehicle.id,
-                                            )}
+                                            onClick={() => toggleVehicle(vehicle)}
+                                            disabled={!isSelected(vehicle.id) && !canAddMore}
+                                            aria-pressed={isSelected(vehicle.id)}
                                             style={{
                                                 flex: 1,
                                                 padding: "10px",
-                                                background: isSelected(
-                                                    vehicle.id,
-                                                )
-                                                    ? "var(--color-accent)"
-                                                    : "transparent",
+                                                background: isSelected(vehicle.id) ? "var(--color-accent)" : "transparent",
                                                 border: "1px solid var(--color-border)",
                                                 borderRadius: "8px",
-                                                color: isSelected(vehicle.id)
-                                                    ? "#000"
-                                                    : "var(--color-muted)",
+                                                color: isSelected(vehicle.id) ? "#000" : "var(--color-muted)",
                                                 fontWeight: 600,
                                                 fontSize: "0.85rem",
-                                                cursor:
-                                                    !isSelected(vehicle.id) &&
-                                                    !canAddMore
-                                                        ? "not-allowed"
-                                                        : "pointer",
-                                                opacity:
-                                                    !isSelected(vehicle.id) &&
-                                                    !canAddMore
-                                                        ? 0.4
-                                                        : 1,
+                                                cursor: !isSelected(vehicle.id) && !canAddMore ? "not-allowed" : "pointer",
+                                                opacity: !isSelected(vehicle.id) && !canAddMore ? 0.4 : 1,
                                             }}
                                         >
-                                            {isSelected(vehicle.id)
-                                                ? "Remove"
-                                                : "Compare"}
+                                            {isSelected(vehicle.id) ? "Remove" : "Compare"}
                                         </button>
                                         <Link
                                             href={`/configure/${vehicle.id}`}
                                             style={{
                                                 flex: 1,
                                                 padding: "10px",
-                                                background:
-                                                    "var(--color-accent)",
+                                                background: "var(--color-accent)",
                                                 border: "none",
                                                 borderRadius: "8px",
                                                 color: "#000",
@@ -438,8 +369,7 @@ export default function HomePage() {
                                 }}
                             >
                                 {selectedVehicles.length} vehicle
-                                {selectedVehicles.length > 1 ? "s" : ""}{" "}
-                                selected for comparison
+                                {selectedVehicles.length > 1 ? "s" : ""} selected for comparison
                             </span>
                             <Link
                                 href="/compare"
