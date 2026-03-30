@@ -8,16 +8,16 @@ class ConfiguratorService {
     createConfiguration(vehicle) {
         return {
             vehicle,
-            selectedColor: null,
+            selectedColour: null,
             selectedWheels: null,
             selectedPackages: [],
             totalPrice: vehicle.price,
         };
     }
     // Each method returns a NEW config - never mutate
-    selectColor(config, colorId) {
-        const color = this.options.colors.find((c) => c.id === colorId) ?? null;
-        return this.recalculate({ ...config, selectedColor: color });
+    selectColour(config, colourId) {
+        const colour = this.options.colours.find((c) => c.id === colourId) ?? null;
+        return this.recalculate({ ...config, selectedColour: colour });
     }
     selectWheels(config, wheelId) {
         const wheels = this.options.wheels.find((w) => w.id === wheelId) ?? null;
@@ -37,12 +37,12 @@ class ConfiguratorService {
         return this.options;
     }
     recalculate(config) {
-        const colorPrice = config.selectedColor?.priceModifier ?? 0;
+        const colourPrice = config.selectedColour?.priceModifier ?? 0;
         const wheelPrice = config.selectedWheels?.priceModifier ?? 0;
         const packagePrice = config.selectedPackages.reduce((sum, pkg) => sum + pkg.priceModifier, 0);
         return {
             ...config,
-            totalPrice: config.vehicle.price + colorPrice + wheelPrice + packagePrice,
+            totalPrice: config.vehicle.price + colourPrice + wheelPrice + packagePrice,
         };
     }
 }
