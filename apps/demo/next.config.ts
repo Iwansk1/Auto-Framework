@@ -10,8 +10,8 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "auto-framework-demo.vercel.app",
-                pathname: "/api/media/file/**",
+                hostname: "vqbcqaoehlbyosgyjfeg.supabase.co",
+                pathname: "/storage/v1/object/public/**",
             },
             {
                 protocol: "https",
