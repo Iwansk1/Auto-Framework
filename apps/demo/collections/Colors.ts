@@ -1,7 +1,7 @@
 import type { CollectionConfig } from "payload";
 
-export const Colors: CollectionConfig = {
-    slug: "colors",
+export const Colours: CollectionConfig = {
+    slug: "colours",
     admin: {
         useAsTitle: "name",
         defaultColumns: ["name", "hex", "priceModifier"],
@@ -30,8 +30,7 @@ export const Colors: CollectionConfig = {
             defaultValue: 0,
             min: 0,
             admin: {
-                description:
-                    "Additional cost in EUR. Use 0 for included colors",
+                description: "Additional cost in EUR. Use 0 for included colors",
             },
         },
     ],

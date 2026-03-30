@@ -1,5 +1,5 @@
 import { Vehicle } from "./Vehicle";
-export type ColorOption = {
+export type ColourOption = {
     id: string;
     name: string;
     hex: string;
@@ -19,13 +19,13 @@ export type PackageOption = {
     priceModifier: number;
 };
 export interface ConfiguratorOptions {
-    colors: ColorOption[];
+    colours: ColourOption[];
     wheels: WheelOption[];
     packages: PackageOption[];
 }
 export interface VehicleConfiguration {
     vehicle: Vehicle;
-    selectedColor: ColorOption | null;
+    selectedColour: ColourOption | null;
     selectedWheels: WheelOption | null;
     selectedPackages: PackageOption[];
     totalPrice: number;

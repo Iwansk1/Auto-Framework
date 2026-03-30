@@ -21,8 +21,7 @@ const mockVehicles: Vehicle[] = [
             range: 450,
         },
         features: [],
-        imageUrl:
-            "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
+        imageUrl: "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
     },
     {
         id: "2",
@@ -41,8 +40,7 @@ const mockVehicles: Vehicle[] = [
             range: 560,
         },
         features: [],
-        imageUrl:
-            "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
+        imageUrl: "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
     },
     {
         id: "3",
@@ -61,8 +59,7 @@ const mockVehicles: Vehicle[] = [
             range: 600,
         },
         features: [],
-        imageUrl:
-            "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
+        imageUrl: "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
     },
 ];
 
@@ -74,7 +71,7 @@ const mockOccasions: Occasion[] = [
         year: 2021,
         askingPrice: 74500,
         mileage: 45000,
-        color: "Frozen Grey",
+        colour: "Frozen Grey",
         transmission: "manual",
         condition: "used",
         features: ["Airco", "Adaptieve cruise control"],
@@ -88,7 +85,7 @@ const mockOccasions: Occasion[] = [
         year: 2022,
         askingPrice: 38000,
         mileage: 22000,
-        color: "Wit",
+        colour: "Wit",
         transmission: "automatic",
         condition: "used",
         features: ["Airco", "Navigatie"],
@@ -102,7 +99,7 @@ const mockOccasions: Occasion[] = [
         year: 2023,
         askingPrice: 45000,
         mileage: 8000,
-        color: "Rood",
+        colour: "Rood",
         transmission: "automatic",
         condition: "demo",
         features: ["Autopilot"],

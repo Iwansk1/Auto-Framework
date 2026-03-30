@@ -31,9 +31,7 @@ class RestAdapter {
                 range: doc.specs.range,
             },
             features: doc.features?.map((f) => f.feature) ?? [],
-            imageUrl: doc.image?.url
-                ? `${this.baseUrl}${doc.image.url}`
-                : undefined,
+            imageUrl: doc.image?.url ? `${this.baseUrl}${doc.image.url}` : undefined,
         }));
     }
     async getOccasions() {
@@ -45,14 +43,12 @@ class RestAdapter {
             year: doc.year,
             askingPrice: doc.askingPrice,
             mileage: doc.mileage,
-            color: doc.color,
+            colour: doc.colour,
             transmission: doc.transmission,
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
             images: doc.images?.map((img) => ({
-                url: typeof img.image === "object" && img.image?.url
-                    ? `${this.baseUrl}${img.image.url}`
-                    : "",
+                url: typeof img.image === "object" && img.image?.url ? `${this.baseUrl}${img.image.url}` : "",
                 caption: img.caption ?? undefined,
             })) ?? [],
             description: doc.description ?? undefined,
@@ -66,7 +62,7 @@ class RestAdapter {
             this.fetch("/api/packages?limit=50"),
         ]);
         return {
-            colors: coloursResult.docs.map((doc) => ({
+            colours: coloursResult.docs.map((doc) => ({
                 id: String(doc.id),
                 name: doc.name,
                 hex: doc.hex,

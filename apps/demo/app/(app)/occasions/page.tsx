@@ -393,8 +393,8 @@ export default function OccasionsPage() {
                                                 value: occasion.transmission.charAt(0).toUpperCase() + occasion.transmission.slice(1),
                                             },
                                             {
-                                                label: "Color",
-                                                value: occasion.color ?? "—",
+                                                label: "Colour",
+                                                value: occasion.colour ?? "—",
                                             },
                                         ].map((stat) => (
                                             <div key={stat.label}>

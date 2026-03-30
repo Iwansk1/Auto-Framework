@@ -11,7 +11,7 @@ export interface Occasion {
     year: number;
     askingPrice: number;
     mileage: number;
-    color: string;
+    colour: string;
     transmission: TransmissionType;
     condition: ConditionType;
     features: string[];

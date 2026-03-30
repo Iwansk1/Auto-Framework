@@ -7,7 +7,7 @@ const react_1 = require("react");
 const core_1 = require("@automotive/core");
 const VehicleContext = (0, react_1.createContext)(null);
 const defaultConfigurationOptions = {
-    colors: [
+    colours: [
         { id: "black", name: "Black", hex: "#000000", priceModifier: 0 },
         { id: "white", name: "White", hex: "#FFFFFF", priceModifier: 0 },
         {
@@ -49,22 +49,14 @@ const defaultConfigurationOptions = {
             id: "comfort",
             name: "Comfort Package",
             description: "Enhanced comfort for long journeys.",
-            features: [
-                "Heated seats",
-                "Heated steering wheel",
-                "Parking sensors",
-            ],
+            features: ["Heated seats", "Heated steering wheel", "Parking sensors"],
             priceModifier: 1800,
         },
         {
             id: "technology",
             name: "Technology Package",
             description: "Latest driver assistance systems",
-            features: [
-                "Lane assist",
-                "Blind spot detection",
-                "Head-up display",
-            ],
+            features: ["Lane assist", "Blind spot detection", "Head-up display"],
             priceModifier: 2400,
         },
         {
@@ -76,7 +68,7 @@ const defaultConfigurationOptions = {
         },
     ],
 };
-function VehicleProvider({ children, vehicles, configurationOptions = defaultConfigurationOptions, }) {
+function VehicleProvider({ children, vehicles, configurationOptions = defaultConfigurationOptions }) {
     // Filters
     const filterService = (0, react_1.useMemo)(() => new core_1.FilterService(), []);
     const [filters, setFilters] = (0, react_1.useState)({});
@@ -116,10 +108,10 @@ function VehicleProvider({ children, vehicles, configurationOptions = defaultCon
     const startConfiguration = (vehicle) => {
         setConfiguration(configuratorService.createConfiguration(vehicle));
     };
-    const selectColor = (colorId) => {
+    const selectColour = (colourId) => {
         if (!configuration)
             return;
-        setConfiguration(configuratorService.selectColor(configuration, colorId));
+        setConfiguration(configuratorService.selectColour(configuration, colourId));
     };
     const selectWheels = (wheelId) => {
         if (!configuration)
@@ -148,21 +140,11 @@ function VehicleProvider({ children, vehicles, configurationOptions = defaultCon
         configuration,
         configurationOptions,
         startConfiguration,
-        selectColor,
+        selectColour,
         selectWheels,
         togglePackage,
-    }), [
-        vehicles,
-        filteredVehicles,
-        filters,
-        isFiltered,
-        selectedVehicles,
-        comparisonResult,
-        activeStrategy,
-        configuration,
-        configurationOptions,
-    ]);
-    return ((0, jsx_runtime_1.jsx)(VehicleContext.Provider, { value: value, children: children }));
+    }), [vehicles, filteredVehicles, filters, isFiltered, selectedVehicles, comparisonResult, activeStrategy, configuration, configurationOptions]);
+    return (0, jsx_runtime_1.jsx)(VehicleContext.Provider, { value: value, children: children });
 }
 // ─── Consumer hook ────────────────────────────────────────────────────────────
 function useVehicleContext() {

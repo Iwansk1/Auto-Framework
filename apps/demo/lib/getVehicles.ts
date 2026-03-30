@@ -5,7 +5,7 @@
  */
 import { getPayloadClient } from "./payload";
 import { Vehicle } from "@automotive/core";
-import type { PayloadVehicle, Media } from "../payload-types";
+import type { Vehicle as PayloadVehicle, Media } from "../payload-types";
 
 export async function getVehicles(): Promise<Vehicle[]> {
     const payload = await getPayloadClient();

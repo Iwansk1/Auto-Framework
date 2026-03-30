@@ -4,14 +4,7 @@ export const Occasions: CollectionConfig = {
     slug: "occasions",
     admin: {
         useAsTitle: "make",
-        defaultColumns: [
-            "make",
-            "model",
-            "year",
-            "askingPrice",
-            "mileage",
-            "available",
-        ],
+        defaultColumns: ["make", "model", "year", "askingPrice", "mileage", "available"],
     },
     access: {
         read: () => true,
@@ -62,7 +55,7 @@ export const Occasions: CollectionConfig = {
             },
         },
         {
-            name: "Color",
+            name: "colour",
             type: "text",
             required: true,
         },
@@ -90,16 +83,13 @@ export const Occasions: CollectionConfig = {
             name: "featuresText",
             type: "textarea",
             admin: {
-                description:
-                    "Type one feature per line. Each line becomes a separate bullet point on the website.",
+                description: "Type one feature per line. Each line becomes a separate bullet point on the website.",
             },
             hooks: {
                 afterRead: [
                     ({ siblingData }) => {
                         if (siblingData?.features?.length > 0) {
-                            return siblingData.features
-                                .map((f: { feature: string }) => f.feature)
-                                .join("\n");
+                            return siblingData.features.map((f: { feature: string }) => f.feature).join("\n");
                         }
                         return "";
                     },

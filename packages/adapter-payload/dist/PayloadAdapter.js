@@ -28,9 +28,7 @@ class PayloadAdapter {
                 range: doc.specs.range,
             },
             features: doc.features?.map((f) => f.feature) ?? [],
-            imageUrl: doc.image && typeof doc.image === "object"
-                ? `${this.serverUrl}${doc.image.url}`
-                : undefined,
+            imageUrl: doc.image && typeof doc.image === "object" ? (doc.image.url ?? undefined) : undefined,
         }));
     }
     async getOccasions() {
@@ -46,14 +44,12 @@ class PayloadAdapter {
             year: doc.year,
             askingPrice: doc.askingPrice,
             mileage: doc.mileage,
-            color: doc.color,
+            colour: doc.colour,
             transmission: doc.transmission,
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
             images: doc.images?.map((img) => ({
-                url: typeof img.image === "object"
-                    ? `${this.serverUrl}${img.image.url}`
-                    : "",
+                url: typeof img.image === "object" ? (img.image.url ?? "") : "",
                 caption: img.caption ?? undefined,
             })) ?? [],
             description: doc.description ?? undefined,
@@ -62,12 +58,12 @@ class PayloadAdapter {
     }
     async getConfiguratorOptions() {
         const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
-            this.payload.find({ collection: "colors", limit: 50 }),
+            this.payload.find({ collection: "colours", limit: 50 }),
             this.payload.find({ collection: "wheels", limit: 50 }),
             this.payload.find({ collection: "packages", limit: 50 }),
         ]);
         return {
-            colors: coloursResult.docs.map((doc) => ({
+            colours: coloursResult.docs.map((doc) => ({
                 id: String(doc.id),
                 name: doc.name,
                 hex: doc.hex,

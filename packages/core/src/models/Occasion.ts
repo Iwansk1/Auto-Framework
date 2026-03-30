@@ -15,7 +15,7 @@ export interface Occasion {
     // Pricing & details
     askingPrice: number; // EURO
     mileage: number; // KM
-    color: string;
+    colour: string;
     transmission: TransmissionType;
     condition: ConditionType;
     // Flexible free text features
