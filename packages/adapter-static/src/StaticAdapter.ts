@@ -1,9 +1,4 @@
-import {
-    AutomotiveAdapter,
-    Vehicle,
-    Occasion,
-    ConfiguratorOptions,
-} from "@automotive/core";
+import { AutomotiveAdapter, Vehicle, Occasion, ConfiguratorOptions } from "@automotive/core";
 
 interface StaticAdapterOptions {
     vehicles?: Vehicle[];
@@ -12,7 +7,7 @@ interface StaticAdapterOptions {
 }
 
 const defaultConfiguratorOptions: ConfiguratorOptions = {
-    colors: [],
+    colours: [],
     wheels: [],
     packages: [],
 };
@@ -25,8 +20,7 @@ export class StaticAdapter implements AutomotiveAdapter {
     constructor(options: StaticAdapterOptions = {}) {
         this.vehicles = options.vehicles ?? [];
         this.occasions = options.occasions ?? [];
-        this.configuratorOptions =
-            options.configuratorOptions ?? defaultConfiguratorOptions;
+        this.configuratorOptions = options.configuratorOptions ?? defaultConfiguratorOptions;
     }
 
     async getVehicles(): Promise<Vehicle[]> {

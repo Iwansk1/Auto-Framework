@@ -1,22 +1,13 @@
 import { useVehicleContext } from "../context/VehicleContext";
 
 export function useConfigurator() {
-    const {
-        configuration,
-        configurationOptions,
-        startConfiguration,
-        selectColor,
-        selectWheels,
-        togglePackage,
-    } = useVehicleContext();
+    const { configuration, configurationOptions, startConfiguration, selectColour, selectWheels, togglePackage } = useVehicleContext();
 
-    const isPackageSelected = (packageId: string): boolean =>
-        configuration?.selectedPackages.some((p) => p.id === packageId) ??
-        false;
+    const isPackageSelected = (packageId: string): boolean => configuration?.selectedPackages.some((p) => p.id === packageId) ?? false;
 
-    const isColorSelected = (colorId: string): boolean => {
-        if (!configuration?.selectedColor) return false;
-        return configuration.selectedColor.id === colorId;
+    const isColourSelected = (colourId: string): boolean => {
+        if (!configuration?.selectedColour) return false;
+        return configuration.selectedColour.id === colourId;
     };
 
     const isWheelsSelected = (wheelId: string): boolean => {
@@ -35,11 +26,11 @@ export function useConfigurator() {
         configuration,
         configuratorOptions: configurationOptions,
         startConfiguration,
-        selectColor,
+        selectColour,
         selectWheels,
         togglePackage,
         isPackageSelected,
-        isColorSelected,
+        isColourSelected,
         isWheelsSelected,
         formattedPrice,
     };

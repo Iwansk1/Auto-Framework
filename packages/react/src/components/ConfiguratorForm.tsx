@@ -4,10 +4,10 @@ import { VehicleConfiguration, ConfiguratorOptions } from "@automotive/core";
 interface ConfiguratorFormProps {
     configuration: VehicleConfiguration;
     options: ConfiguratorOptions;
-    onSelectColor: (colorId: string) => void;
+    onSelectColour: (colourId: string) => void;
     onSelectWheels: (wheelId: string) => void;
     onTogglePackage: (packageId: string) => void;
-    isColorSelected: (colorId: string) => boolean;
+    isColourSelected: (colourId: string) => boolean;
     isWheelsSelected: (wheelId: string) => boolean;
     isPackageSelected: (packageId: string) => boolean;
     formattedPrice: string | null;
@@ -21,10 +21,10 @@ interface ConfiguratorFormProps {
 export function ConfiguratorForm({
     configuration,
     options,
-    onSelectColor,
+    onSelectColour,
     onSelectWheels,
     onTogglePackage,
-    isColorSelected,
+    isColourSelected,
     isWheelsSelected,
     isPackageSelected,
     formattedPrice,
@@ -50,16 +50,16 @@ export function ConfiguratorForm({
                 <legend className={legendClassName}>Colors</legend>
                 <div role="radiogroup" aria-label="Select a color">
                     {" "}
-                    {options.colors.map((color) => (
+                    {options.colours.map((colour) => (
                         <button
-                            key={color.id}
+                            key={colour.id}
                             role="radio"
-                            aria-checked={isColorSelected(color.id)}
-                            aria-label={`${color.name}${color.priceModifier > 0 ? ` +€${color.priceModifier}` : "included"}`}
-                            onClick={() => onSelectColor(color.id)}
-                            style={{ backgroundColor: color.hex }}
-                            title={color.name}
-                            className={`${optionClassName} ${isColorSelected(color.id) ? selectedOptionClassName : ""}`}
+                            aria-checked={isColourSelected(colour.id)}
+                            aria-label={`${colour.name}${colour.priceModifier > 0 ? ` +€${colour.priceModifier}` : "included"}`}
+                            onClick={() => onSelectColour(colour.id)}
+                            style={{ backgroundColor: colour.hex }}
+                            title={colour.name}
+                            className={`${optionClassName} ${isColourSelected(colour.id) ? selectedOptionClassName : ""}`}
                         ></button>
                     ))}
                 </div>
@@ -74,20 +74,14 @@ export function ConfiguratorForm({
                             key={wheel.id}
                             role="radio"
                             aria-checked={isWheelsSelected(wheel.id)}
-                            aria-label={`${wheel.name}${
-                                wheel.priceModifier > 0
-                                    ? ` +€${wheel.priceModifier}`
-                                    : " included"
-                            }`}
+                            aria-label={`${wheel.name}${wheel.priceModifier > 0 ? ` +€${wheel.priceModifier}` : " included"}`}
                             onClick={() => onSelectWheels(wheel.id)}
                         >
                             {wheel.name}
                             {wheel.priceModifier > 0 && (
                                 <small>
                                     +€
-                                    {wheel.priceModifier.toLocaleString(
-                                        "nl-NL",
-                                    )}
+                                    {wheel.priceModifier.toLocaleString("nl-NL")}
                                 </small>
                             )}
                         </button>
@@ -114,9 +108,7 @@ export function ConfiguratorForm({
                                     <li key={feature}>{feature}</li>
                                 ))}
                             </ul>
-                            <span>
-                                +€{pkg.priceModifier.toLocaleString("nl-NL")}
-                            </span>
+                            <span>+€{pkg.priceModifier.toLocaleString("nl-NL")}</span>
                         </button>
                     ))}
                 </div>
