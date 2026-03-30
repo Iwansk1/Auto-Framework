@@ -4,10 +4,11 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "npx payload generate:importmap && next build",
         "start": "next start",
         "lint": "eslint"
     },
+    "type": "module",
     "dependencies": {
         "@automotive/adapter-payload": "*",
         "@automotive/core": "*",

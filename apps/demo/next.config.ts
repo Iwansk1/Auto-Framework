@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
+                hostname: "auto-framework-demo.vercel.app",
+                pathname: "/api/media/file/**",
+            },
+            {
+                protocol: "https",
                 hostname: "images.unsplash.com",
             },
             {
@@ -19,9 +24,6 @@ const nextConfig: NextConfig = {
                 pathname: "/api/media/file/**",
             },
         ],
-        // Allow local IP addresses in development
-        dangerouslyAllowSVG: true,
-        unoptimized: process.env.NODE_ENV === "development",
     },
 };
 
