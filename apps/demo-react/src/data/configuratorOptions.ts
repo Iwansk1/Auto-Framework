@@ -1,7 +1,7 @@
 import type { ConfiguratorOptions } from "@automotive/core";
 
 export const configuratorOptions: ConfiguratorOptions = {
-    colors: [
+    colours: [
         { id: "c1", name: "Midnight Black", hex: "#1a1a1a", priceModifier: 0 },
         { id: "c2", name: "Alpine White", hex: "#f5f5f5", priceModifier: 0 },
         { id: "c3", name: "Portimao Blue", hex: "#2d4a7a", priceModifier: 750 },

@@ -1,9 +1,4 @@
-import {
-    AutomotiveAdapter,
-    Vehicle,
-    Occasion,
-    ConfiguratorOptions,
-} from "@automotive/core";
+import { AutomotiveAdapter, Vehicle, Occasion, ConfiguratorOptions } from "@automotive/core";
 
 interface RestAdapterOptions {
     baseUrl: string; // e.g. http://localhost:3000
@@ -43,13 +38,11 @@ interface RestOccasion {
     year: number;
     askingPrice: number;
     mileage: number;
-    color: string;
+    colour: string;
     transmission: "automatic" | "manual";
     condition: "new" | "used" | "demo";
     features?: { feature: string }[] | null;
-    images?:
-        | { image: { url?: string } | string; caption?: string | null }[]
-        | null;
+    images?: { image: { url?: string } | string; caption?: string | null }[] | null;
     description?: string | null;
     available: boolean;
 }
@@ -86,17 +79,13 @@ export class RestAdapter implements AutomotiveAdapter {
     private async fetch<T>(path: string): Promise<PayloadRestResponse<T>> {
         const response = await fetch(`${this.baseUrl}${path}`);
         if (!response.ok) {
-            throw new Error(
-                `RestAdapter: request failed for ${path} — ${response.status}`,
-            );
+            throw new Error(`RestAdapter: request failed for ${path} — ${response.status}`);
         }
         return response.json();
     }
 
     async getVehicles(): Promise<Vehicle[]> {
-        const result = await this.fetch<RestVehicle>(
-            "/api/vehicles?limit=100&depth=1",
-        );
+        const result = await this.fetch<RestVehicle>("/api/vehicles?limit=100&depth=1");
 
         return result.docs.map((doc) => ({
             id: String(doc.id),
@@ -115,16 +104,12 @@ export class RestAdapter implements AutomotiveAdapter {
                 range: doc.specs.range,
             },
             features: doc.features?.map((f) => f.feature) ?? [],
-            imageUrl: doc.image?.url
-                ? `${this.baseUrl}${doc.image.url}`
-                : undefined,
+            imageUrl: doc.image?.url ? `${this.baseUrl}${doc.image.url}` : undefined,
         })) as Vehicle[];
     }
 
     async getOccasions(): Promise<Occasion[]> {
-        const result = await this.fetch<RestOccasion>(
-            "/api/occasions?limit=100&depth=1&where[available][equals]=true",
-        );
+        const result = await this.fetch<RestOccasion>("/api/occasions?limit=100&depth=1&where[available][equals]=true");
 
         return result.docs.map((doc) => ({
             id: String(doc.id),
@@ -133,16 +118,13 @@ export class RestAdapter implements AutomotiveAdapter {
             year: doc.year,
             askingPrice: doc.askingPrice,
             mileage: doc.mileage,
-            color: doc.color,
+            colour: doc.colour,
             transmission: doc.transmission,
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
             images:
                 doc.images?.map((img) => ({
-                    url:
-                        typeof img.image === "object" && img.image?.url
-                            ? `${this.baseUrl}${img.image.url}`
-                            : "",
+                    url: typeof img.image === "object" && img.image?.url ? `${this.baseUrl}${img.image.url}` : "",
                     caption: img.caption ?? undefined,
                 })) ?? [],
             description: doc.description ?? undefined,
@@ -151,16 +133,14 @@ export class RestAdapter implements AutomotiveAdapter {
     }
 
     async getConfiguratorOptions(): Promise<ConfiguratorOptions> {
-        const [coloursResult, wheelsResult, packagesResult] = await Promise.all(
-            [
-                this.fetch<RestColour>("/api/colors?limit=50"),
-                this.fetch<RestWheel>("/api/wheels?limit=50"),
-                this.fetch<RestPackage>("/api/packages?limit=50"),
-            ],
-        );
+        const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
+            this.fetch<RestColour>("/api/colors?limit=50"),
+            this.fetch<RestWheel>("/api/wheels?limit=50"),
+            this.fetch<RestPackage>("/api/packages?limit=50"),
+        ]);
 
         return {
-            colors: coloursResult.docs.map((doc) => ({
+            colours: coloursResult.docs.map((doc) => ({
                 id: String(doc.id),
                 name: doc.name,
                 hex: doc.hex,
