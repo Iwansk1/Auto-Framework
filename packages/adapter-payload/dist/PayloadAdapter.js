@@ -49,7 +49,7 @@ class PayloadAdapter {
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
             images: doc.images?.map((img) => ({
-                url: typeof img.image === "object" && img.image.url ? (img.image.url ?? "") : "",
+                url: typeof img.image === "object" ? (img.image.url ?? "") : "",
                 caption: img.caption ?? undefined,
             })) ?? [],
             description: doc.description ?? undefined,

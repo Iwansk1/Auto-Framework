@@ -127,7 +127,7 @@ export class PayloadAdapter implements AutomotiveAdapter {
             features: doc.features?.map((f) => f.feature) ?? [],
             images:
                 doc.images?.map((img) => ({
-                    url: typeof img.image === "object" && (img.image as PayloadMedia).url ? ((img.image as PayloadMedia).url ?? "") : "",
+                    url: typeof img.image === "object" ? ((img.image as PayloadMedia).url ?? "") : "",
                     caption: img.caption ?? undefined,
                 })) ?? [],
             description: doc.description ?? undefined,
