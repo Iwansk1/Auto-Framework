@@ -266,7 +266,7 @@ export default function OccasionDetailPage({ params }: OccasionDetailPageProps) 
                                     label: "Mileage",
                                     value: formattedMileage(occasion.mileage),
                                 },
-                                { label: "Colour", value: occasion.color },
+                                { label: "Colour", value: occasion.colour },
                                 {
                                     label: "Transmission",
                                     value: occasion.transmission.charAt(0).toUpperCase() + occasion.transmission.slice(1),

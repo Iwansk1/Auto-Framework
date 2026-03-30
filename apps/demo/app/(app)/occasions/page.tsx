@@ -394,7 +394,7 @@ export default function OccasionsPage() {
                                             },
                                             {
                                                 label: "Color",
-                                                value: occasion.color ?? "—",
+                                                value: occasion.colour ?? "—",
                                             },
                                         ].map((stat) => (
                                             <div key={stat.label}>

@@ -34,7 +34,7 @@ interface VehicleContextValue {
     // Configurator
     configuration: VehicleConfiguration | null;
     startConfiguration: (vehicle: Vehicle) => void;
-    selectColor: (colorId: string) => void;
+    selectColour: (colourId: string) => void;
     selectWheels: (wheelId: string) => void;
     togglePackage: (packageId: string) => void;
     configurationOptions: ConfiguratorOptions;
@@ -42,7 +42,7 @@ interface VehicleContextValue {
 const VehicleContext = createContext<VehicleContextValue | null>(null);
 
 const defaultConfigurationOptions: ConfiguratorOptions = {
-    colors: [
+    colours: [
         { id: "black", name: "Black", hex: "#000000", priceModifier: 0 },
         { id: "white", name: "White", hex: "#FFFFFF", priceModifier: 0 },
         {
@@ -84,22 +84,14 @@ const defaultConfigurationOptions: ConfiguratorOptions = {
             id: "comfort",
             name: "Comfort Package",
             description: "Enhanced comfort for long journeys.",
-            features: [
-                "Heated seats",
-                "Heated steering wheel",
-                "Parking sensors",
-            ],
+            features: ["Heated seats", "Heated steering wheel", "Parking sensors"],
             priceModifier: 1800,
         },
         {
             id: "technology",
             name: "Technology Package",
             description: "Latest driver assistance systems",
-            features: [
-                "Lane assist",
-                "Blind spot detection",
-                "Head-up display",
-            ],
+            features: ["Lane assist", "Blind spot detection", "Head-up display"],
             priceModifier: 2400,
         },
         {
@@ -118,51 +110,29 @@ interface VehicleProviderProps {
     configurationOptions?: ConfiguratorOptions;
 }
 
-export function VehicleProvider({
-    children,
-    vehicles,
-    configurationOptions = defaultConfigurationOptions,
-}: VehicleProviderProps) {
+export function VehicleProvider({ children, vehicles, configurationOptions = defaultConfigurationOptions }: VehicleProviderProps) {
     // Filters
     const filterService = useMemo(() => new FilterService(), []);
     const [filters, setFilters] = useState<VehicleFilters>({});
 
-    const filteredVehicles = useMemo(
-        () => filterService.filterVehicles(vehicles, filters),
-        [vehicles, filters, filterService],
-    );
+    const filteredVehicles = useMemo(() => filterService.filterVehicles(vehicles, filters), [vehicles, filters, filterService]);
 
     const resetFilters = () => setFilters({});
     const isFiltered = filteredVehicles.length !== vehicles.length;
 
     // Strategies
-    const performanceStrategy = useMemo(
-        () => new PerformanceScoringStrategy(),
-        [],
-    );
-    const efficiencyStrategy = useMemo(
-        () => new EfficiencyScoringStrategy(),
-        [],
-    );
+    const performanceStrategy = useMemo(() => new PerformanceScoringStrategy(), []);
+    const efficiencyStrategy = useMemo(() => new EfficiencyScoringStrategy(), []);
 
     // Services
-    const comparisonService = useMemo(
-        () => new ComparisonService(performanceStrategy),
-        [performanceStrategy],
-    );
-    const configuratorService = useMemo(
-        () => new ConfiguratorService(configurationOptions),
-        [configurationOptions],
-    );
+    const comparisonService = useMemo(() => new ComparisonService(performanceStrategy), [performanceStrategy]);
+    const configuratorService = useMemo(() => new ConfiguratorService(configurationOptions), [configurationOptions]);
 
     // State
-    const [activeStrategy, setActiveStrategy] =
-        useState<ScoringStrategy>(performanceStrategy);
+    const [activeStrategy, setActiveStrategy] = useState<ScoringStrategy>(performanceStrategy);
     const [selectedVehicles, setSelectedVehicles] = useState<Vehicle[]>([]);
-    const [comparisonResult, setComparisonResult] =
-        useState<ComparisonResult | null>(null);
-    const [configuration, setConfiguration] =
-        useState<VehicleConfiguration | null>(null);
+    const [comparisonResult, setComparisonResult] = useState<ComparisonResult | null>(null);
+    const [configuration, setConfiguration] = useState<VehicleConfiguration | null>(null);
 
     // Comparison handlers
     const selectVehicleForComparison = (vehicle: Vehicle) => {
@@ -174,9 +144,7 @@ export function VehicleProvider({
     const removeVehicleFromComparison = (vehicleId: string) => {
         const updated = selectedVehicles.filter((v) => v.id !== vehicleId);
         setSelectedVehicles(updated);
-        setComparisonResult(
-            updated.length > 0 ? comparisonService.compare(updated) : null,
-        );
+        setComparisonResult(updated.length > 0 ? comparisonService.compare(updated) : null);
     };
 
     const setStrategy = (strategy: ScoringStrategy) => {
@@ -192,25 +160,19 @@ export function VehicleProvider({
         setConfiguration(configuratorService.createConfiguration(vehicle));
     };
 
-    const selectColor = (colorId: string) => {
+    const selectColour = (colourId: string) => {
         if (!configuration) return;
-        setConfiguration(
-            configuratorService.selectColor(configuration, colorId),
-        );
+        setConfiguration(configuratorService.selectColour(configuration, colourId));
     };
 
     const selectWheels = (wheelId: string) => {
         if (!configuration) return;
-        setConfiguration(
-            configuratorService.selectWheels(configuration, wheelId),
-        );
+        setConfiguration(configuratorService.selectWheels(configuration, wheelId));
     };
 
     const togglePackage = (packageId: string) => {
         if (!configuration) return;
-        setConfiguration(
-            configuratorService.togglePackage(configuration, packageId),
-        );
+        setConfiguration(configuratorService.togglePackage(configuration, packageId));
     };
 
     // Context value
@@ -231,28 +193,14 @@ export function VehicleProvider({
             configuration,
             configurationOptions,
             startConfiguration,
-            selectColor,
+            selectColour,
             selectWheels,
             togglePackage,
         }),
-        [
-            vehicles,
-            filteredVehicles,
-            filters,
-            isFiltered,
-            selectedVehicles,
-            comparisonResult,
-            activeStrategy,
-            configuration,
-            configurationOptions,
-        ],
+        [vehicles, filteredVehicles, filters, isFiltered, selectedVehicles, comparisonResult, activeStrategy, configuration, configurationOptions],
     );
 
-    return (
-        <VehicleContext.Provider value={value}>
-            {children}
-        </VehicleContext.Provider>
-    );
+    return <VehicleContext.Provider value={value}>{children}</VehicleContext.Provider>;
 }
 
 // ─── Consumer hook ────────────────────────────────────────────────────────────
@@ -260,9 +208,7 @@ export function VehicleProvider({
 export function useVehicleContext(): VehicleContextValue {
     const context = useContext(VehicleContext);
     if (!context) {
-        throw new Error(
-            "useVehicleContext must be used within a VehicleProvider",
-        );
+        throw new Error("useVehicleContext must be used within a VehicleProvider");
     }
     return context;
 }

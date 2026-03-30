@@ -16,20 +16,17 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
         configuration,
         configuratorOptions,
         startConfiguration,
-        selectColor,
+        selectColour,
         selectWheels,
         togglePackage,
-        isColorSelected,
+        isColourSelected,
         isWheelsSelected,
         isPackageSelected,
         formattedPrice,
     } = useConfigurator();
 
     useEffect(() => {
-        if (
-            vehicle &&
-            (!configuration || configuration.vehicle.id !== vehicle.id)
-        ) {
+        if (vehicle && (!configuration || configuration.vehicle.id !== vehicle.id)) {
             startConfiguration(vehicle);
         }
     }, [vehicle]);
@@ -44,11 +41,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                     textAlign: "center",
                 }}
             >
-                <h1
-                    style={{ color: "var(--color-text)", marginBottom: "16px" }}
-                >
-                    Vehicle not found
-                </h1>
+                <h1 style={{ color: "var(--color-text)", marginBottom: "16px" }}>Vehicle not found</h1>
                 <Link href="/" style={{ color: "var(--color-accent)" }}>
                     Back to catalogue
                 </Link>
@@ -66,13 +59,11 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                     textAlign: "center",
                 }}
             >
-                <p style={{ color: "var(--color-muted)" }}>
-                    Loading configurator...
-                </p>
+                <p style={{ color: "var(--color-muted)" }}>Loading configurator...</p>
             </div>
         );
     }
-    const { colors, wheels, packages } = configuratorOptions;
+    const { colours, wheels, packages } = configuratorOptions;
     return (
         <div
             style={{
@@ -161,27 +152,23 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                 flexWrap: "wrap",
                             }}
                         >
-                            {colors.map((color) => {
-                                const selected = isColorSelected(color.id);
+                            {colours.map((colour) => {
+                                const selected = isColourSelected(colour.id);
                                 return (
                                     <button
-                                        key={color.id}
-                                        onClick={() => selectColor(color.id)}
+                                        key={colour.id}
+                                        onClick={() => selectColour(colour.id)}
                                         role="radio"
                                         aria-checked={selected}
-                                        aria-label={`${color.name}${color.priceModifier > 0 ? ` +€${color.priceModifier}` : " included"}`}
-                                        title={color.name}
+                                        aria-label={`${colour.name}${colour.priceModifier > 0 ? ` +€${colour.priceModifier}` : " included"}`}
+                                        title={colour.name}
                                         style={{
                                             width: "48px",
                                             height: "48px",
                                             borderRadius: "50%",
-                                            backgroundColor: color.hex,
-                                            border: selected
-                                                ? "3px solid var(--color-accent)"
-                                                : "3px solid transparent",
-                                            outline: selected
-                                                ? "2px solid var(--color-accent)"
-                                                : "2px solid var(--color-border)",
+                                            backgroundColor: colour.hex,
+                                            border: selected ? "3px solid var(--color-accent)" : "3px solid transparent",
+                                            outline: selected ? "2px solid var(--color-accent)" : "2px solid var(--color-border)",
                                             outlineOffset: "2px",
                                             cursor: "pointer",
                                             transition: "all 0.2s",
@@ -190,7 +177,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                 );
                             })}
                         </div>
-                        {configuration.selectedColor && (
+                        {configuration.selectedColour && (
                             <p
                                 style={{
                                     marginTop: "12px",
@@ -198,12 +185,8 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                     color: "var(--color-muted)",
                                 }}
                             >
-                                Selected:{" "}
-                                <span style={{ color: "var(--color-text)" }}>
-                                    {configuration.selectedColor.name}
-                                </span>
-                                {configuration.selectedColor.priceModifier >
-                                    0 && (
+                                Selected: <span style={{ color: "var(--color-text)" }}>{configuration.selectedColour.name}</span>
+                                {configuration.selectedColour.priceModifier > 0 && (
                                     <span
                                         style={{
                                             color: "var(--color-accent)",
@@ -211,9 +194,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                         }}
                                     >
                                         +€
-                                        {configuration.selectedColor.priceModifier.toLocaleString(
-                                            "nl-NL",
-                                        )}
+                                        {configuration.selectedColour.priceModifier.toLocaleString("nl-NL")}
                                     </span>
                                 )}
                             </p>
@@ -260,12 +241,8 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             justifyContent: "space-between",
                                             padding: "14px 18px",
                                             borderRadius: "10px",
-                                            border: selected
-                                                ? "1px solid var(--color-accent)"
-                                                : "1px solid var(--color-border)",
-                                            backgroundColor: selected
-                                                ? "var(--color-accent-dim)"
-                                                : "var(--color-surface)",
+                                            border: selected ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                                            backgroundColor: selected ? "var(--color-accent-dim)" : "var(--color-surface)",
                                             cursor: "pointer",
                                             transition: "all 0.2s",
                                             textAlign: "left",
@@ -275,9 +252,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             style={{
                                                 fontSize: "14px",
                                                 fontWeight: 500,
-                                                color: selected
-                                                    ? "var(--color-accent)"
-                                                    : "var(--color-text)",
+                                                color: selected ? "var(--color-accent)" : "var(--color-text)",
                                             }}
                                         >
                                             {wheel.name}
@@ -285,15 +260,10 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                         <span
                                             style={{
                                                 fontSize: "13px",
-                                                color:
-                                                    wheel.priceModifier > 0
-                                                        ? "var(--color-accent)"
-                                                        : "var(--color-muted)",
+                                                color: wheel.priceModifier > 0 ? "var(--color-accent)" : "var(--color-muted)",
                                             }}
                                         >
-                                            {wheel.priceModifier > 0
-                                                ? `+€${wheel.priceModifier.toLocaleString("nl-NL")}`
-                                                : "Included"}
+                                            {wheel.priceModifier > 0 ? `+€${wheel.priceModifier.toLocaleString("nl-NL")}` : "Included"}
                                         </span>
                                     </button>
                                 );
@@ -341,12 +311,8 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             gap: "14px",
                                             padding: "16px 18px",
                                             borderRadius: "10px",
-                                            border: selected
-                                                ? "1px solid var(--color-accent)"
-                                                : "1px solid var(--color-border)",
-                                            backgroundColor: selected
-                                                ? "var(--color-accent-dim)"
-                                                : "var(--color-surface)",
+                                            border: selected ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                                            backgroundColor: selected ? "var(--color-accent-dim)" : "var(--color-surface)",
                                             cursor: "pointer",
                                             transition: "all 0.2s",
                                             textAlign: "left",
@@ -358,12 +324,8 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                                 width: "20px",
                                                 height: "20px",
                                                 borderRadius: "4px",
-                                                border: selected
-                                                    ? "2px solid var(--color-accent)"
-                                                    : "2px solid var(--color-border)",
-                                                backgroundColor: selected
-                                                    ? "var(--color-accent)"
-                                                    : "transparent",
+                                                border: selected ? "2px solid var(--color-accent)" : "2px solid var(--color-border)",
+                                                backgroundColor: selected ? "var(--color-accent)" : "transparent",
                                                 display: "flex",
                                                 alignItems: "center",
                                                 justifyContent: "center",
@@ -382,8 +344,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             <div
                                                 style={{
                                                     display: "flex",
-                                                    justifyContent:
-                                                        "space-between",
+                                                    justifyContent: "space-between",
                                                     marginBottom: "4px",
                                                 }}
                                             >
@@ -391,9 +352,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                                     style={{
                                                         fontSize: "14px",
                                                         fontWeight: 600,
-                                                        color: selected
-                                                            ? "var(--color-accent)"
-                                                            : "var(--color-text)",
+                                                        color: selected ? "var(--color-accent)" : "var(--color-text)",
                                                     }}
                                                 >
                                                     {pkg.name}
@@ -405,9 +364,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                                     }}
                                                 >
                                                     +€
-                                                    {pkg.priceModifier.toLocaleString(
-                                                        "nl-NL",
-                                                    )}
+                                                    {pkg.priceModifier.toLocaleString("nl-NL")}
                                                 </span>
                                             </div>
                                             <p
@@ -435,8 +392,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                                         style={{
                                                             fontSize: "11px",
                                                             color: "var(--color-muted)",
-                                                            backgroundColor:
-                                                                "var(--color-panel)",
+                                                            backgroundColor: "var(--color-panel)",
                                                             border: "1px solid var(--color-border)",
                                                             padding: "2px 8px",
                                                             borderRadius: "4px",
@@ -518,7 +474,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                             </dd>
                         </div>
 
-                        {configuration.selectedColor && (
+                        {configuration.selectedColour && (
                             <div
                                 style={{
                                     display: "flex",
@@ -541,9 +497,8 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                         margin: 0,
                                     }}
                                 >
-                                    {configuration.selectedColor.name}
-                                    {configuration.selectedColor.priceModifier >
-                                        0 && (
+                                    {configuration.selectedColour.name}
+                                    {configuration.selectedColour.priceModifier > 0 && (
                                         <span
                                             style={{
                                                 color: "var(--color-accent)",
@@ -551,9 +506,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             }}
                                         >
                                             +€
-                                            {configuration.selectedColor.priceModifier.toLocaleString(
-                                                "nl-NL",
-                                            )}
+                                            {configuration.selectedColour.priceModifier.toLocaleString("nl-NL")}
                                         </span>
                                     )}
                                 </dd>
@@ -584,8 +537,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                     }}
                                 >
                                     {configuration.selectedWheels.name}
-                                    {configuration.selectedWheels
-                                        .priceModifier > 0 && (
+                                    {configuration.selectedWheels.priceModifier > 0 && (
                                         <span
                                             style={{
                                                 color: "var(--color-accent)",
@@ -593,9 +545,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             }}
                                         >
                                             +€
-                                            {configuration.selectedWheels.priceModifier.toLocaleString(
-                                                "nl-NL",
-                                            )}
+                                            {configuration.selectedWheels.priceModifier.toLocaleString("nl-NL")}
                                         </span>
                                     )}
                                 </dd>
@@ -632,9 +582,7 @@ export default function ConfigurePage({ params }: ConfigurePageProps) {
                                             }}
                                         >
                                             +€
-                                            {pkg.priceModifier.toLocaleString(
-                                                "nl-NL",
-                                            )}
+                                            {pkg.priceModifier.toLocaleString("nl-NL")}
                                         </span>
                                     </dd>
                                 ))}

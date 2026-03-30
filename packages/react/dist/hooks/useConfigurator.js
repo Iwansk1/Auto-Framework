@@ -3,13 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useConfigurator = useConfigurator;
 const VehicleContext_1 = require("../context/VehicleContext");
 function useConfigurator() {
-    const { configuration, configurationOptions, startConfiguration, selectColor, selectWheels, togglePackage, } = (0, VehicleContext_1.useVehicleContext)();
-    const isPackageSelected = (packageId) => configuration?.selectedPackages.some((p) => p.id === packageId) ??
-        false;
-    const isColorSelected = (colorId) => {
-        if (!configuration?.selectedColor)
+    const { configuration, configurationOptions, startConfiguration, selectColour, selectWheels, togglePackage } = (0, VehicleContext_1.useVehicleContext)();
+    const isPackageSelected = (packageId) => configuration?.selectedPackages.some((p) => p.id === packageId) ?? false;
+    const isColourSelected = (colourId) => {
+        if (!configuration?.selectedColour)
             return false;
-        return configuration.selectedColor.id === colorId;
+        return configuration.selectedColour.id === colourId;
     };
     const isWheelsSelected = (wheelId) => {
         if (!configuration?.selectedWheels)
@@ -26,11 +25,11 @@ function useConfigurator() {
         configuration,
         configuratorOptions: configurationOptions,
         startConfiguration,
-        selectColor,
+        selectColour,
         selectWheels,
         togglePackage,
         isPackageSelected,
-        isColorSelected,
+        isColourSelected,
         isWheelsSelected,
         formattedPrice,
     };

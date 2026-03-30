@@ -15,7 +15,7 @@ interface VehicleContextValue {
     setStrategy: (strategy: ScoringStrategy) => void;
     configuration: VehicleConfiguration | null;
     startConfiguration: (vehicle: Vehicle) => void;
-    selectColor: (colorId: string) => void;
+    selectColour: (colourId: string) => void;
     selectWheels: (wheelId: string) => void;
     togglePackage: (packageId: string) => void;
     configurationOptions: ConfiguratorOptions;
@@ -25,7 +25,7 @@ interface VehicleProviderProps {
     vehicles: Vehicle[];
     configurationOptions?: ConfiguratorOptions;
 }
-export declare function VehicleProvider({ children, vehicles, configurationOptions, }: VehicleProviderProps): import("react/jsx-runtime").JSX.Element;
+export declare function VehicleProvider({ children, vehicles, configurationOptions }: VehicleProviderProps): import("react/jsx-runtime").JSX.Element;
 export declare function useVehicleContext(): VehicleContextValue;
 export {};
 //# sourceMappingURL=VehicleContext.d.ts.map

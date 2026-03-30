@@ -69,11 +69,11 @@ export interface Config {
     collections: {
         users: User;
         media: Media;
-        vehicles: PayloadVehicle;
-        colors: PayloadColor;
-        wheels: PayloadWheel;
-        packages: PayloadPackage;
-        occasions: PayloadOccasion;
+        vehicles: Vehicle;
+        colours: Colour;
+        wheels: Wheel;
+        packages: Package;
+        occasions: Occasion;
         "payload-kv": PayloadKv;
         "payload-locked-documents": PayloadLockedDocument;
         "payload-preferences": PayloadPreference;
@@ -83,24 +83,26 @@ export interface Config {
     collectionsSelect: {
         users: UsersSelect<false> | UsersSelect<true>;
         media: MediaSelect<false> | MediaSelect<true>;
+        vehicles: VehiclesSelect<false> | VehiclesSelect<true>;
+        colors: ColorsSelect<false> | ColorsSelect<true>;
+        wheels: WheelsSelect<false> | WheelsSelect<true>;
+        packages: PackagesSelect<false> | PackagesSelect<true>;
+        occasions: OccasionsSelect<false> | OccasionsSelect<true>;
         "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
-        "payload-locked-documents":
-            | PayloadLockedDocumentsSelect<false>
-            | PayloadLockedDocumentsSelect<true>;
-        "payload-preferences":
-            | PayloadPreferencesSelect<false>
-            | PayloadPreferencesSelect<true>;
-        "payload-migrations":
-            | PayloadMigrationsSelect<false>
-            | PayloadMigrationsSelect<true>;
+        "payload-locked-documents": PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+        "payload-preferences": PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+        "payload-migrations": PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
     };
     db: {
-        defaultIDType: string;
+        defaultIDType: number;
     };
     fallbackLocale: null;
     globals: {};
     globalsSelect: {};
     locale: null;
+    widgets: {
+        collections: CollectionsWidget;
+    };
     user: User;
     jobs: {
         tasks: unknown;
@@ -130,7 +132,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-    id: string;
+    id: number;
     updatedAt: string;
     createdAt: string;
     email: string;
@@ -155,7 +157,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-    id: string;
+    id: number;
     alt: string;
     updatedAt: string;
     createdAt: string;
@@ -171,10 +173,173 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vehicles".
+ */
+export interface Vehicle {
+    id: number;
+    make: string;
+    model: string;
+    year: number;
+    price: number;
+    category: "sedan" | "suv" | "hatchback" | "coupe" | "stationwagen" | "mpv";
+    fuelType: "petrol" | "diesel" | "electric" | "hybrid";
+    image?: (number | null) | Media;
+    features?:
+        | {
+              feature: string;
+              id?: string | null;
+          }[]
+        | null;
+    specs: {
+        horsepower: number;
+        /**
+         * Nm
+         */
+        torque: number;
+        /**
+         * 0-100 km/h in seconds
+         */
+        acceleration: number;
+        /**
+         * km/h
+         */
+        topSpeed: number;
+        /**
+         * L/100km or kWh/100km for electric
+         */
+        fuelEfficiency: number;
+        /**
+         * km
+         */
+        range: number;
+    };
+    updatedAt: string;
+    createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "colors".
+ */
+export interface Colour {
+    id: number;
+    name: string;
+    /**
+     * Hex color code e.g. #1a1a1a
+     */
+    hex: string;
+    /**
+     * Additional cost in EUR. Use 0 for included colors
+     */
+    priceModifier: number;
+    updatedAt: string;
+    createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "wheels".
+ */
+export interface Wheel {
+    id: number;
+    name: string;
+    /**
+     * Wheel diameter in inches
+     */
+    sizeInch: number;
+    /**
+     * Additional cost in EUR. Use 0 for included wheels.
+     */
+    priceModifier: number;
+    updatedAt: string;
+    createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "packages".
+ */
+export interface Package {
+    id: number;
+    name: string;
+    description: string;
+    features: {
+        feature: string;
+        id?: string | null;
+    }[];
+    /**
+     * Additional cost in EUR
+     */
+    priceModifier: number;
+    updatedAt: string;
+    createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "occasions".
+ */
+export interface Occasion {
+    id: number;
+    /**
+     * Brand: BMW, Volkswagen etc
+     */
+    make: string;
+    /**
+     * Model: M3, Golf GTI
+     */
+    model: string;
+    /**
+     * Year of registration
+     */
+    year: string;
+    /**
+     * Asking price in EURO
+     */
+    askingPrice: number;
+    /**
+     * Mileage in KM
+     */
+    mileage: number;
+    Colour: string;
+    transmission: "automatic" | "manual";
+    condition: "new" | "used" | "demo";
+    /**
+     * Type one feature per line. Each line becomes a separate bullet point on the website.
+     */
+    featuresText?: string | null;
+    features?:
+        | {
+              feature?: string | null;
+              id?: string | null;
+          }[]
+        | null;
+    /**
+     * Upload your images here
+     */
+    images?:
+        | {
+              image: number | Media;
+              /**
+               * Optional "interior" or "Front view"
+               */
+              caption?: string | null;
+              id?: string | null;
+          }[]
+        | null;
+    /**
+     * Additional notes about this car
+     */
+    description?: string | null;
+    /**
+     * Uncheck when this car has been sold
+     */
+    available?: boolean | null;
+    updatedAt: string;
+    createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-    id: string;
+    id: number;
     key: string;
     data:
         | {
@@ -191,20 +356,40 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-    id: string;
+    id: number;
     document?:
         | ({
               relationTo: "users";
-              value: string | User;
+              value: number | User;
           } | null)
         | ({
               relationTo: "media";
-              value: string | Media;
+              value: number | Media;
+          } | null)
+        | ({
+              relationTo: "vehicles";
+              value: number | Vehicle;
+          } | null)
+        | ({
+              relationTo: "colors";
+              value: number | Colour;
+          } | null)
+        | ({
+              relationTo: "wheels";
+              value: number | Wheel;
+          } | null)
+        | ({
+              relationTo: "packages";
+              value: number | Package;
+          } | null)
+        | ({
+              relationTo: "occasions";
+              value: number | Occasion;
           } | null);
     globalSlug?: string | null;
     user: {
         relationTo: "users";
-        value: string | User;
+        value: number | User;
     };
     updatedAt: string;
     createdAt: string;
@@ -214,10 +399,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-    id: string;
+    id: number;
     user: {
         relationTo: "users";
-        value: string | User;
+        value: number | User;
     };
     key?: string | null;
     value?:
@@ -237,7 +422,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-    id: string;
+    id: number;
     name?: string | null;
     batch?: number | null;
     updatedAt: string;
@@ -285,6 +470,108 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "vehicles_select".
+ */
+export interface VehiclesSelect<T extends boolean = true> {
+    make?: T;
+    model?: T;
+    year?: T;
+    price?: T;
+    category?: T;
+    fuelType?: T;
+    image?: T;
+    features?:
+        | T
+        | {
+              feature?: T;
+              id?: T;
+          };
+    specs?:
+        | T
+        | {
+              horsepower?: T;
+              torque?: T;
+              acceleration?: T;
+              topSpeed?: T;
+              fuelEfficiency?: T;
+              range?: T;
+          };
+    updatedAt?: T;
+    createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "colors_select".
+ */
+export interface ColorsSelect<T extends boolean = true> {
+    name?: T;
+    hex?: T;
+    priceModifier?: T;
+    updatedAt?: T;
+    createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "wheels_select".
+ */
+export interface WheelsSelect<T extends boolean = true> {
+    name?: T;
+    sizeInch?: T;
+    priceModifier?: T;
+    updatedAt?: T;
+    createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "packages_select".
+ */
+export interface PackagesSelect<T extends boolean = true> {
+    name?: T;
+    description?: T;
+    features?:
+        | T
+        | {
+              feature?: T;
+              id?: T;
+          };
+    priceModifier?: T;
+    updatedAt?: T;
+    createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "occasions_select".
+ */
+export interface OccasionsSelect<T extends boolean = true> {
+    make?: T;
+    model?: T;
+    year?: T;
+    askingPrice?: T;
+    mileage?: T;
+    Colour?: T;
+    transmission?: T;
+    condition?: T;
+    featuresText?: T;
+    features?:
+        | T
+        | {
+              feature?: T;
+              id?: T;
+          };
+    images?:
+        | T
+        | {
+              image?: T;
+              caption?: T;
+              id?: T;
+          };
+    description?: T;
+    available?: T;
+    updatedAt?: T;
+    createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -325,84 +612,20 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+    data?: {
+        [k: string]: unknown;
+    };
+    width: "full";
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
     [k: string]: unknown;
-}
-
-export interface PayloadVehicle {
-    id: string;
-    make: string;
-    model: string;
-    year: number;
-    price: number;
-    category: "sedan" | "suv" | "hatchback" | "coupe" | "stationwagen" | "mpv";
-    fuelType: "petrol" | "diesel" | "electric" | "hybrid";
-    image?: string | Media | null;
-    features?: { feature: string; id?: string | null }[] | null;
-    specs: {
-        horsepower: number;
-        torque: number;
-        acceleration: number;
-        topSpeed: number;
-        fuelEfficiency: number;
-        range: number;
-    };
-    updatedAt: string;
-    createdAt: string;
-}
-
-export interface PayloadColor {
-    id: string;
-    name: string;
-    hex: string;
-    priceModifier: number;
-    updatedAt: string;
-    createdAt: string;
-}
-
-export interface PayloadWheel {
-    id: string;
-    name: string;
-    sizeInch: number;
-    priceModifier: number;
-    updatedAt: string;
-    createdAt: string;
-}
-
-export interface PayloadPackage {
-    id: string;
-    name: string;
-    description: string;
-    features?: { feature: string; id?: string | null }[] | null;
-    priceModifier: number;
-    updatedAt: string;
-    createdAt: string;
-}
-
-export interface PayloadOccasion {
-    id: string;
-    make: string;
-    model: string;
-    year: number;
-    askingPrice: number;
-    mileage: number;
-    colour: string;
-    transmission: "automatic" | "manual";
-    condition: "new" | "used" | "demo";
-    features?: { feature: string; id?: string | null }[] | null;
-    images?:
-        | {
-              image: string | Media;
-              caption?: string | null;
-              id?: string | null;
-          }[]
-        | null;
-    description?: string | null;
-    available: boolean;
-    updatedAt: string;
-    createdAt: string;
 }
 
 declare module "payload" {

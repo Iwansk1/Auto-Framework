@@ -4,7 +4,7 @@ export declare class ConfiguratorService {
     private options;
     constructor(options: ConfiguratorOptions);
     createConfiguration(vehicle: Vehicle): VehicleConfiguration;
-    selectColor(config: VehicleConfiguration, colorId: string): VehicleConfiguration;
+    selectColour(config: VehicleConfiguration, colourId: string): VehicleConfiguration;
     selectWheels(config: VehicleConfiguration, wheelId: string): VehicleConfiguration;
     togglePackage(config: VehicleConfiguration, packageId: string): VehicleConfiguration;
     getOptions(): ConfiguratorOptions;

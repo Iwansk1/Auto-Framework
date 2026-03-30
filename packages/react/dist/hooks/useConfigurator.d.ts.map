@@ -1,1 +1,1 @@
-{"version":3,"file":"useConfigurator.d.ts","sourceRoot":"","sources":["../../src/hooks/useConfigurator.ts"],"names":[],"mappings":"AAEA,wBAAgB,eAAe;;;;;;;mCAUW,MAAM,KAAG,OAAO;+BAIpB,MAAM,KAAG,OAAO;gCAKf,MAAM,KAAG,OAAO;;EAwBtD"}
+{"version":3,"file":"useConfigurator.d.ts","sourceRoot":"","sources":["../../src/hooks/useConfigurator.ts"],"names":[],"mappings":"AAEA,wBAAgB,eAAe;;;;;;;mCAGW,MAAM,KAAG,OAAO;iCAElB,MAAM,KAAG,OAAO;gCAKjB,MAAM,KAAG,OAAO;;EAwBtD"}

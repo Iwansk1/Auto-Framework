@@ -5,31 +5,30 @@
  */
 import { getPayloadClient } from "./payload";
 import { ConfiguratorOptions } from "@automotive/core";
-import type { PayloadColor, PayloadWheel, PayloadPackage } from "@/payload-types";
-
+import type { Colour, Wheel, Package } from "@/payload-types";
 export async function getConfiguratorOptions(): Promise<ConfiguratorOptions> {
     const payload = await getPayloadClient();
 
-    const [colorsResult, wheelsResult, packagesResult] = await Promise.all([
-        payload.find({ collection: "colors", limit: 50 }),
+    const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
+        payload.find({ collection: "colours", limit: 50 }),
         payload.find({ collection: "wheels", limit: 50 }),
         payload.find({ collection: "packages", limit: 50 }),
     ]);
 
     return {
-        colors: colorsResult.docs.map((doc: PayloadColor) => ({
+        colours: coloursResult.docs.map((doc: Colour) => ({
             id: String(doc.id),
             name: doc.name,
             hex: doc.hex,
             priceModifier: doc.priceModifier,
         })),
-        wheels: wheelsResult.docs.map((doc: PayloadWheel) => ({
+        wheels: wheelsResult.docs.map((doc: Wheel) => ({
             id: String(doc.id),
             name: doc.name,
             sizeInch: doc.sizeInch,
             priceModifier: doc.priceModifier,
         })),
-        packages: packagesResult.docs.map((doc: PayloadPackage) => ({
+        packages: packagesResult.docs.map((doc: Package) => ({
             id: String(doc.id),
             name: doc.name,
             description: doc.description,

@@ -13,19 +13,15 @@ const adapter = new StaticAdapter({
 
 export default function Root() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-    const [configuratorOptions, setConfiguratorOptions] =
-        useState<ConfiguratorOptions>({
-            colors: [],
-            wheels: [],
-            packages: [],
-        });
+    const [configuratorOptions, setConfiguratorOptions] = useState<ConfiguratorOptions>({
+        colours: [],
+        wheels: [],
+        packages: [],
+    });
 
     useEffect(() => {
         async function load() {
-            const [v, o] = await Promise.all([
-                adapter.getVehicles(),
-                adapter.getConfiguratorOptions(),
-            ]);
+            const [v, o] = await Promise.all([adapter.getVehicles(), adapter.getConfiguratorOptions()]);
             setVehicles(v);
             setConfiguratorOptions(o);
         }
@@ -33,10 +29,7 @@ export default function Root() {
     }, []);
 
     return (
-        <VehicleProvider
-            vehicles={vehicles}
-            configurationOptions={configuratorOptions}
-        >
+        <VehicleProvider vehicles={vehicles} configurationOptions={configuratorOptions}>
             <App />
         </VehicleProvider>
     );
