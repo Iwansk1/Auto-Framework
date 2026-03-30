@@ -27,7 +27,7 @@ export async function getOccasions(): Promise<Occasion[]> {
         year: Number(doc.year),
         askingPrice: doc.askingPrice,
         mileage: doc.mileage,
-        colour: doc.Colour,
+        colour: doc.colour,
         transmission: doc.transmission,
         condition: doc.condition,
         features: doc.features?.map((f) => f.feature ?? "").filter(Boolean) ?? [],

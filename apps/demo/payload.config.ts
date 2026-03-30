@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Vehicles } from "./collections/Vehicles";
-import { Colors } from "./collections/Colors";
+import { Colours } from "./collections/Colors";
 import { Wheels } from "./collections/Wheels";
 import { Packages } from "./collections/Packages";
 import { Occasions } from "./collections/Occasions";
@@ -47,7 +47,7 @@ export default buildConfig({
         },
     },
 
-    collections: [Users, Media, Vehicles, Colors, Wheels, Packages, Occasions],
+    collections: [Users, Media, Vehicles, Colours, Wheels, Packages, Occasions],
 
     editor: lexicalEditor(),
 
