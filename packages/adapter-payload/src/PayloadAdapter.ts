@@ -137,7 +137,7 @@ export class PayloadAdapter implements AutomotiveAdapter {
 
     async getConfiguratorOptions(): Promise<ConfiguratorOptions> {
         const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
-            this.payload.find({ collection: "colors", limit: 50 }),
+            this.payload.find({ collection: "colours", limit: 50 }),
             this.payload.find({ collection: "wheels", limit: 50 }),
             this.payload.find({ collection: "packages", limit: 50 }),
         ]);

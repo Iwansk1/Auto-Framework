@@ -22,7 +22,7 @@ const mockVehicle = {
     imageUrl: "/api/media/file/BMW-M3-Handschalter-2022-Hero.jpg?2026-03-03T16%3A14%3A42.745Z",
 };
 const mockOptions = {
-    colors: [
+    colours: [
         { id: "c1", name: "Midnight Black", hex: "#1a1a1a", priceModifier: 0 },
         { id: "c2", name: "Portimao Blue", hex: "#2d4a7a", priceModifier: 750 },
     ],
@@ -55,18 +55,18 @@ const mockOptions = {
     (0, vitest_1.describe)("selectColor()", () => {
         (0, vitest_1.it)("adds colour price modifier to total price", () => {
             const config = service.createConfiguration(mockVehicle);
-            const updated = service.selectColor(config, "c2");
+            const updated = service.selectColour(config, "c2");
             (0, vitest_1.expect)(updated.totalPrice).toBe(85750);
         });
         (0, vitest_1.it)("replaces previous colour without stacking price", () => {
             const config = service.createConfiguration(mockVehicle);
-            const withBlue = service.selectColor(config, "c2");
-            const withBlack = service.selectColor(withBlue, "c1");
+            const withBlue = service.selectColour(config, "c2");
+            const withBlack = service.selectColour(withBlue, "c1");
             (0, vitest_1.expect)(withBlack.totalPrice).toBe(85000);
         });
         (0, vitest_1.it)("returns a new object — immutable update", () => {
             const config = service.createConfiguration(mockVehicle);
-            const updated = service.selectColor(config, "c1");
+            const updated = service.selectColour(config, "c1");
             (0, vitest_1.expect)(updated).not.toBe(config);
         });
     });
@@ -111,8 +111,8 @@ const mockOptions = {
     (0, vitest_1.describe)("price accumulation", () => {
         (0, vitest_1.it)("correctly totals colour + wheels + packages", () => {
             const config = service.createConfiguration(mockVehicle);
-            const withColor = service.selectColor(config, "c2");
-            const withWheels = service.selectWheels(withColor, "w2");
+            const withColour = service.selectColour(config, "c2");
+            const withWheels = service.selectWheels(withColour, "w2");
             const withP1 = service.togglePackage(withWheels, "p1");
             const withP2 = service.togglePackage(withP1, "p2");
             (0, vitest_1.expect)(withP2.totalPrice).toBe(91550);
