@@ -44,7 +44,7 @@ class PayloadAdapter {
             year: doc.year,
             askingPrice: doc.askingPrice,
             mileage: doc.mileage,
-            color: doc.color,
+            colour: doc.colour,
             transmission: doc.transmission,
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
@@ -63,7 +63,7 @@ class PayloadAdapter {
             this.payload.find({ collection: "packages", limit: 50 }),
         ]);
         return {
-            colors: coloursResult.docs.map((doc) => ({
+            colours: coloursResult.docs.map((doc) => ({
                 id: String(doc.id),
                 name: doc.name,
                 hex: doc.hex,

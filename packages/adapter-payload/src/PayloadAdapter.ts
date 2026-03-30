@@ -31,7 +31,7 @@ interface PayloadOccasion {
     year: number;
     askingPrice: number;
     mileage: number;
-    color: string;
+    colour: string;
     transmission: "automatic" | "manual";
     condition: "new" | "used" | "demo";
     features?: { feature: string }[] | null;
@@ -121,7 +121,7 @@ export class PayloadAdapter implements AutomotiveAdapter {
             year: doc.year,
             askingPrice: doc.askingPrice,
             mileage: doc.mileage,
-            color: doc.color,
+            colour: doc.colour,
             transmission: doc.transmission,
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
@@ -143,7 +143,7 @@ export class PayloadAdapter implements AutomotiveAdapter {
         ]);
 
         return {
-            colors: (coloursResult.docs as PayloadColour[]).map((doc) => ({
+            colours: (coloursResult.docs as PayloadColour[]).map((doc) => ({
                 id: String(doc.id),
                 name: doc.name,
                 hex: doc.hex,
