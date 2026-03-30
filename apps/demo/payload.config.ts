@@ -12,6 +12,30 @@ import { Packages } from "./collections/Packages";
 import { Occasions } from "./collections/Occasions";
 import { s3Storage } from "@payloadcms/storage-s3";
 
+if (!process.env.PAYLOAD_SECRET) {
+    throw new Error("Missing PAYLOAD_SECRET");
+}
+
+if (!process.env.DATABASE_URI) {
+    throw new Error("Missing DATABASE_URI");
+}
+
+if (!process.env.SUPABASE_ACCESS_KEY) {
+    throw new Error("Missing SUPABASE_ACCESS_KEY");
+}
+
+if (!process.env.SUPABASE_SECRET_KEY) {
+    throw new Error("Missing SUPABASE_SECRET_KEY");
+}
+
+if (!process.env.SUPABASE_BUCKET) {
+    throw new Error("Missing SUPABASE_BUCKET");
+}
+
+if (!process.env.SUPABASE_ENDPOINT) {
+    throw new Error("Missing SUPABASE_ENDPOINT");
+}
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -42,18 +66,16 @@ export default buildConfig({
     plugins: [
         s3Storage({
             collections: {
-                media: true,
-                // optionally:
-                // 'media-with-prefix': { prefix: 'some-prefix/' },
+                media: {},
             },
-            bucket: process.env.SUPABASE_BUCKET!,
+            bucket: process.env.SUPABASE_BUCKET || "",
             config: {
-                endpoint: process.env.SUPABASE_ENDPOINT,
+                endpoint: process.env.SUPABASE_ENDPOINT || "",
                 credentials: {
-                    accessKeyId: process.env.SUPABASE_ACCESS_KEY!,
-                    secretAccessKey: process.env.SUPABASE_SECRET_KEY!,
+                    accessKeyId: process.env.SUPABASE_ACCESS_KEY || "",
+                    secretAccessKey: process.env.SUPABASE_SECRET_KEY || "",
                 },
-                region: process.env.SUPABASE_REGION,
+                region: process.env.SUPABASE_REGION || "",
                 forcePathStyle: true,
             },
         }),
