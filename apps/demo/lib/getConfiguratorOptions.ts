@@ -1,10 +1,11 @@
+/**
+ * @deprecated
+ * This file has been superseded by @automotive/adapter-payload.
+ * Kept for reference and school documentation purposes.
+ */
 import { getPayloadClient } from "./payload";
 import { ConfiguratorOptions } from "@automotive/core";
-import type {
-    PayloadColor,
-    PayloadWheel,
-    PayloadPackage,
-} from "@/payload-types";
+import type { PayloadColor, PayloadWheel, PayloadPackage } from "@/payload-types";
 
 export async function getConfiguratorOptions(): Promise<ConfiguratorOptions> {
     const payload = await getPayloadClient();

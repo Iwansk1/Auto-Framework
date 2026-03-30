@@ -1,19 +1,14 @@
 "use client";
-
 import Link from "next/link";
-import { useVehicleComparison } from "@automotive/react";
+import { useVehicleComparison, useVehicleFilter } from "@automotive/react";
 import { VehicleCard } from "@automotive/react";
-import { Vehicle } from "@automotive/core";
 import Image from "next/image";
 
 export default function HomePage() {
-    const {
-        vehicles,
-        isSelected,
-        canAddMore,
-        toggleVehicle,
-        selectedVehicles,
-    } = useVehicleComparison();
+    const { isSelected, canAddMore, toggleVehicle, selectedVehicles } = useVehicleComparison();
+
+    const { filteredVehicles, filters, updateFilter, resetFilters, isFiltered, availableCategories, availableFuelTypes, totalCount, filteredCount } =
+        useVehicleFilter();
 
     const fuelTypeColor: Record<string, string> = {
         electric: "#34d399",
@@ -30,258 +25,370 @@ export default function HomePage() {
                 padding: "48px 24px",
             }}
         >
-            {/* Hero header */}
+            {/* Header */}
             <div style={{ marginBottom: "48px" }}>
-                <p
+                <h1
                     style={{
-                        fontSize: "11px",
-                        letterSpacing: "0.2em",
-                        textTransform: "uppercase",
-                        color: "var(--color-accent)",
-                        fontWeight: 600,
-                        marginBottom: "12px",
+                        fontFamily: "var(--font-display)",
+                        fontSize: "2.5rem",
+                        fontWeight: 700,
+                        color: "var(--color-text)",
+                        marginBottom: "8px",
                     }}
                 >
                     Vehicle Catalogue
-                </p>
-                <h1
-                    style={{
-                        fontSize: "clamp(36px, 5vw, 64px)",
-                        lineHeight: 1,
-                        color: "var(--color-text)",
-                        margin: "0 0 16px 0",
-                    }}
-                >
-                    Find Your
-                    <br />
-                    <span style={{ color: "var(--color-accent)" }}>
-                        Perfect Drive
-                    </span>
                 </h1>
-                <p
-                    style={{
-                        color: "var(--color-muted)",
-                        fontSize: "15px",
-                        fontWeight: 300,
-                    }}
-                >
-                    Select up to 3 vehicles to compare side by side
+                <p style={{ color: "var(--color-muted)" }}>
+                    {isFiltered ? `${filteredCount} of ${totalCount} vehicles match your filters` : `${totalCount} vehicles available`}
                 </p>
             </div>
 
-            {/* Comparison bar */}
-            {selectedVehicles.length > 0 && (
-                <div
-                    role="status"
-                    aria-live="polite"
-                    style={{
-                        marginBottom: "32px",
-                        padding: "16px 24px",
-                        backgroundColor: "var(--color-accent-dim)",
-                        border: "1px solid var(--color-accent)",
-                        borderRadius: "12px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <p
-                        style={{
-                            fontSize: "14px",
-                            color: "var(--color-accent)",
-                            fontWeight: 500,
-                            margin: 0,
-                        }}
-                    >
-                        {selectedVehicles.length} vehicle
-                        {selectedVehicles.length > 1 ? "s" : ""} selected
-                    </p>
-                    <Link
-                        href="/compare"
-                        style={{
-                            fontSize: "13px",
-                            fontWeight: 700,
-                            letterSpacing: "0.06em",
-                            textTransform: "uppercase",
-                            color: "var(--color-carbon)",
-                            backgroundColor: "var(--color-accent)",
-                            padding: "8px 20px",
-                            borderRadius: "8px",
-                            textDecoration: "none",
-                            transition: "opacity 0.2s",
-                        }}
-                    >
-                        Compare Now →
-                    </Link>
-                </div>
-            )}
-
-            {/* Vehicle grid */}
+            {/* Filters */}
             <div
                 style={{
+                    background: "var(--color-panel)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: "12px",
+                    padding: "24px",
+                    marginBottom: "40px",
                     display: "grid",
-                    gridTemplateColumns:
-                        "repeat(auto-fill, minmax(320px, 1fr))",
-                    gap: "24px",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                    gap: "16px",
+                    alignItems: "end",
                 }}
-                role="list"
-                aria-label="Available vehicles"
             >
-                {vehicles.map((vehicle) => (
-                    <div key={vehicle.id} role="listitem">
-                        <VehicleCard
-                            vehicle={vehicle}
-                            isSelected={isSelected(vehicle.id)}
-                            canSelect={canAddMore}
-                            onToggle={toggleVehicle}
-                            className=""
-                            renderImage={(v: Vehicle) =>
-                                v.imageUrl ? (
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            height: "180px",
-                                            borderRadius: "10px",
-                                            overflow: "hidden",
-                                            marginBottom: "16px",
-                                            backgroundColor:
-                                                "var(--color-surface)",
-                                            position: "relative",
-                                        }}
-                                    >
-                                        <Image
-                                            src={v.imageUrl}
-                                            alt={`${v.make} ${v.model} ${v.year}`}
-                                            fill
-                                            style={{ objectFit: "cover" }}
-                                            sizes="(max-width: 768px) 100vw, 33vw"
-                                        />
-                                    </div>
-                                ) : null
-                            }
-                            renderBadge={(v: Vehicle) => (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        gap: "8px",
-                                        marginBottom: "16px",
-                                    }}
-                                >
-                                    <span
-                                        style={{
-                                            fontSize: "11px",
-                                            fontWeight: 600,
-                                            letterSpacing: "0.08em",
-                                            textTransform: "uppercase",
-                                            padding: "4px 10px",
-                                            borderRadius: "4px",
-                                            backgroundColor: `${fuelTypeColor[v.fuelType]}18`,
-                                            color: fuelTypeColor[v.fuelType],
-                                            border: `1px solid ${fuelTypeColor[v.fuelType]}40`,
-                                        }}
-                                    >
-                                        {v.fuelType}
-                                    </span>
-                                    <span
-                                        style={{
-                                            fontSize: "11px",
-                                            fontWeight: 600,
-                                            letterSpacing: "0.08em",
-                                            textTransform: "uppercase",
-                                            padding: "4px 10px",
-                                            borderRadius: "4px",
-                                            backgroundColor:
-                                                "var(--color-panel)",
-                                            color: "var(--color-muted)",
-                                            border: "1px solid var(--color-border)",
-                                        }}
-                                    >
-                                        {v.category}
-                                    </span>
-                                </div>
-                            )}
-                            renderActions={(v: Vehicle) => (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        gap: "8px",
-                                        marginTop: "16px",
-                                        paddingTop: "16px",
-                                        borderTop:
-                                            "1px solid var(--color-border)",
-                                    }}
-                                >
-                                    <button
-                                        onClick={() => toggleVehicle(v)}
-                                        disabled={
-                                            !canAddMore && !isSelected(v.id)
-                                        }
-                                        style={{
-                                            flex: 1,
-                                            padding: "10px",
-                                            fontSize: "12px",
-                                            fontWeight: 700,
-                                            letterSpacing: "0.06em",
-                                            textTransform: "uppercase",
-                                            borderRadius: "8px",
-                                            border: isSelected(v.id)
-                                                ? "1px solid var(--color-accent)"
-                                                : "1px solid var(--color-border)",
-                                            backgroundColor: isSelected(v.id)
-                                                ? "var(--color-accent-dim)"
-                                                : "transparent",
-                                            color: isSelected(v.id)
-                                                ? "var(--color-accent)"
-                                                : "var(--color-muted)",
-                                            cursor:
-                                                !canAddMore && !isSelected(v.id)
-                                                    ? "not-allowed"
-                                                    : "pointer",
-                                            opacity:
-                                                !canAddMore && !isSelected(v.id)
-                                                    ? 0.4
-                                                    : 1,
+                {/* Search */}
+                <div style={{ gridColumn: "span 2" }}>
+                    <label
+                        style={{
+                            display: "block",
+                            color: "var(--color-muted)",
+                            fontSize: "0.75rem",
+                            marginBottom: "6px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}
+                    >
+                        Search
+                    </label>
+                    <input
+                        type="text"
+                        placeholder="Search make, model..."
+                        value={filters.search ?? ""}
+                        onChange={(e) => updateFilter("search", e.target.value || undefined)}
+                        style={{
+                            width: "100%",
+                            background: "var(--color-surface)",
+                            border: "1px solid var(--color-border)",
+                            borderRadius: "8px",
+                            padding: "10px 14px",
+                            color: "var(--color-text)",
+                            fontSize: "0.95rem",
+                            outline: "none",
+                            boxSizing: "border-box",
+                        }}
+                    />
+                </div>
 
-                                            transition: "all 0.2s",
-                                        }}
-                                        aria-pressed={isSelected(v.id)}
-                                        aria-label={
-                                            isSelected(v.id)
-                                                ? `Remove ${v.make} ${v.model} from comparison`
-                                                : `Add ${v.make} ${v.model} to comparison`
-                                        }
-                                    >
-                                        {isSelected(v.id)
-                                            ? "✓ Selected"
-                                            : "+ Compare"}
-                                    </button>
-                                    <Link
-                                        href={`/configure/${v.id}`}
-                                        style={{
-                                            flex: 1,
-                                            padding: "10px",
-                                            fontSize: "12px",
-                                            fontWeight: 700,
-                                            letterSpacing: "0.06em",
-                                            textTransform: "uppercase",
-                                            borderRadius: "8px",
-                                            border: "1px solid var(--color-accent)",
-                                            backgroundColor:
-                                                "var(--color-accent)",
-                                            color: "var(--color-carbon)",
-                                            textDecoration: "none",
-                                            textAlign: "center",
-                                            transition: "opacity 0.2s",
-                                        }}
-                                    >
-                                        Configure
-                                    </Link>
-                                </div>
-                            )}
-                        />
+                {/* Category */}
+                <div>
+                    <label
+                        style={{
+                            display: "block",
+                            color: "var(--color-muted)",
+                            fontSize: "0.75rem",
+                            marginBottom: "6px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}
+                    >
+                        Category
+                    </label>
+                    <select
+                        value={filters.category ?? ""}
+                        onChange={(e) => updateFilter("category", e.target.value || undefined)}
+                        style={{
+                            width: "100%",
+                            background: "var(--color-surface)",
+                            border: "1px solid var(--color-border)",
+                            borderRadius: "8px",
+                            padding: "10px 14px",
+                            color: filters.category ? "var(--color-text)" : "var(--color-muted)",
+                            fontSize: "0.95rem",
+                            outline: "none",
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        <option value="">All categories</option>
+                        {availableCategories.map((cat) => (
+                            <option key={cat} value={cat}>
+                                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Fuel Type */}
+                <div>
+                    <label
+                        style={{
+                            display: "block",
+                            color: "var(--color-muted)",
+                            fontSize: "0.75rem",
+                            marginBottom: "6px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}
+                    >
+                        Fuel Type
+                    </label>
+                    <select
+                        value={filters.fuelType ?? ""}
+                        onChange={(e) => updateFilter("fuelType", e.target.value || undefined)}
+                        style={{
+                            width: "100%",
+                            background: "var(--color-surface)",
+                            border: "1px solid var(--color-border)",
+                            borderRadius: "8px",
+                            padding: "10px 14px",
+                            color: filters.fuelType ? "var(--color-text)" : "var(--color-muted)",
+                            fontSize: "0.95rem",
+                            outline: "none",
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        <option value="">All fuel types</option>
+                        {availableFuelTypes.map((fuel) => (
+                            <option key={fuel} value={fuel}>
+                                {fuel.charAt(0).toUpperCase() + fuel.slice(1)}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Max Price */}
+                <div>
+                    <label
+                        style={{
+                            display: "block",
+                            color: "var(--color-muted)",
+                            fontSize: "0.75rem",
+                            marginBottom: "6px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}
+                    >
+                        Max Price (EUR)
+                    </label>
+                    <input
+                        type="number"
+                        placeholder="e.g. 80000"
+                        value={filters.maxPrice ?? ""}
+                        onChange={(e) => updateFilter("maxPrice", e.target.value ? Number(e.target.value) : undefined)}
+                        style={{
+                            width: "100%",
+                            background: "var(--color-surface)",
+                            border: "1px solid var(--color-border)",
+                            borderRadius: "8px",
+                            padding: "10px 14px",
+                            color: "var(--color-text)",
+                            fontSize: "0.95rem",
+                            outline: "none",
+                            boxSizing: "border-box",
+                        }}
+                    />
+                </div>
+
+                {/* Reset */}
+                {isFiltered && (
+                    <div style={{ display: "flex", alignItems: "flex-end" }}>
+                        <button
+                            onClick={resetFilters}
+                            style={{
+                                background: "transparent",
+                                border: "1px solid var(--color-border)",
+                                borderRadius: "8px",
+                                padding: "10px 20px",
+                                color: "var(--color-muted)",
+                                fontSize: "0.9rem",
+                                cursor: "pointer",
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            Reset filters
+                        </button>
                     </div>
-                ))}
+                )}
             </div>
+
+            {/* Empty state */}
+            {filteredVehicles.length === 0 ? (
+                <div
+                    style={{
+                        textAlign: "center",
+                        padding: "96px 0",
+                        color: "var(--color-muted)",
+                    }}
+                >
+                    <p style={{ fontSize: "1.1rem", marginBottom: "16px" }}>No vehicles match your filters.</p>
+                    <button
+                        onClick={resetFilters}
+                        style={{
+                            background: "var(--color-accent)",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "10px 24px",
+                            color: "#000",
+                            fontWeight: 600,
+                            cursor: "pointer",
+                        }}
+                    >
+                        Reset filters
+                    </button>
+                </div>
+            ) : (
+                <>
+                    {/* Vehicle grid */}
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+                            gap: "24px",
+                            marginBottom: selectedVehicles.length > 0 ? "120px" : "0",
+                        }}
+                    >
+                        {filteredVehicles.map((v) => (
+                            <VehicleCard
+                                key={v.id}
+                                vehicle={v}
+                                renderImage={(vehicle) =>
+                                    vehicle.imageUrl ? (
+                                        <div
+                                            style={{
+                                                width: "100%",
+                                                height: "180px",
+                                                borderRadius: "10px",
+                                                overflow: "hidden",
+                                                marginBottom: "16px",
+                                                backgroundColor: "var(--color-surface)",
+                                                position: "relative",
+                                            }}
+                                        >
+                                            <Image
+                                                src={v.imageUrl}
+                                                alt={`${v.make} ${v.model} ${v.year}`}
+                                                fill
+                                                style={{ objectFit: "cover" }}
+                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                            />
+                                        </div>
+                                    ) : null
+                                }
+                                renderBadge={(vehicle) => (
+                                    <span
+                                        style={{
+                                            background: fuelTypeColor[vehicle.fuelType] ?? "#888",
+                                            color: "#000",
+                                            fontSize: "0.7rem",
+                                            fontWeight: 700,
+                                            letterSpacing: "0.08em",
+                                            textTransform: "uppercase",
+                                            padding: "4px 10px",
+                                            borderRadius: "4px",
+                                            width: "fit-content",
+                                        }}
+                                    >
+                                        {vehicle.fuelType}
+                                    </span>
+                                )}
+                                renderActions={(vehicle) => (
+                                    <div style={{ display: "flex", gap: "8px" }}>
+                                        <button
+                                            onClick={() => toggleVehicle(vehicle)}
+                                            disabled={!isSelected(vehicle.id) && !canAddMore}
+                                            aria-pressed={isSelected(vehicle.id)}
+                                            style={{
+                                                flex: 1,
+                                                padding: "10px",
+                                                background: isSelected(vehicle.id) ? "var(--color-accent)" : "transparent",
+                                                border: "1px solid var(--color-border)",
+                                                borderRadius: "8px",
+                                                color: isSelected(vehicle.id) ? "#000" : "var(--color-muted)",
+                                                fontWeight: 600,
+                                                fontSize: "0.85rem",
+                                                cursor: !isSelected(vehicle.id) && !canAddMore ? "not-allowed" : "pointer",
+                                                opacity: !isSelected(vehicle.id) && !canAddMore ? 0.4 : 1,
+                                            }}
+                                        >
+                                            {isSelected(vehicle.id) ? "Remove" : "Compare"}
+                                        </button>
+                                        <Link
+                                            href={`/configure/${vehicle.id}`}
+                                            style={{
+                                                flex: 1,
+                                                padding: "10px",
+                                                background: "var(--color-accent)",
+                                                border: "none",
+                                                borderRadius: "8px",
+                                                color: "#000",
+                                                fontWeight: 700,
+                                                fontSize: "0.85rem",
+                                                textAlign: "center",
+                                                textDecoration: "none",
+                                            }}
+                                        >
+                                            Configure
+                                        </Link>
+                                    </div>
+                                )}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Comparison bar */}
+                    {selectedVehicles.length > 0 && (
+                        <div
+                            style={{
+                                position: "fixed",
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                background: "var(--color-panel)",
+                                borderTop: "1px solid var(--color-border)",
+                                padding: "16px 24px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                zIndex: 50,
+                            }}
+                        >
+                            <span
+                                style={{
+                                    color: "var(--color-muted)",
+                                    fontSize: "0.9rem",
+                                }}
+                            >
+                                {selectedVehicles.length} vehicle
+                                {selectedVehicles.length > 1 ? "s" : ""} selected for comparison
+                            </span>
+                            <Link
+                                href="/compare"
+                                style={{
+                                    background: "var(--color-accent)",
+                                    color: "#000",
+                                    fontWeight: 700,
+                                    padding: "10px 24px",
+                                    borderRadius: "8px",
+                                    textDecoration: "none",
+                                    fontSize: "0.9rem",
+                                }}
+                            >
+                                Compare Now
+                            </Link>
+                        </div>
+                    )}
+                </>
+            )}
         </div>
     );
 }

@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Nav } from "./components/Nav";
-import { getVehicles } from "@/lib/getVehicles";
-import { getConfiguratorOptions } from "@/lib/getConfiguratorOptions";
+import { PayloadAdapter } from "@automotive/adapter-payload";
+import { getPayloadClient } from "../../lib/payload";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -26,9 +26,18 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const [vehicles, configuratorOptions] = await Promise.all([
-        getVehicles(),
-        getConfiguratorOptions(),
+    const payload = await getPayloadClient();
+
+    const adapter = new PayloadAdapter({
+        payload,
+        serverUrl:
+            process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:3000",
+    });
+
+    const [vehicles, occasions, configuratorOptions] = await Promise.all([
+        adapter.getVehicles(),
+        adapter.getOccasions(),
+        adapter.getConfiguratorOptions(),
     ]);
 
     return (
@@ -39,6 +48,7 @@ export default async function RootLayout({
                 <Providers
                     vehicles={vehicles}
                     configuratorOptions={configuratorOptions}
+                    occasions={occasions}
                 >
                     <Nav />
                     <main>{children}</main>

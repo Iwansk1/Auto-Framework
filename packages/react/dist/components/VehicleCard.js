@@ -42,7 +42,7 @@ function VehicleCard({ vehicle, isSelected = false, onToggle, canSelect = true, 
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
                     gap: "12px",
-                    margin: 0,
+                    marginBottom: "16px",
                 }, children: [
                     {
                         label: "Price",

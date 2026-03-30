@@ -9,10 +9,19 @@ import {
     PerformanceScoringStrategy,
     EfficiencyScoringStrategy,
     ScoringStrategy,
+    FilterService,
+    VehicleFilters,
 } from "@automotive/core";
 
 interface VehicleContextValue {
     vehicles: Vehicle[];
+
+    // Filters
+    filteredVehicles: Vehicle[];
+    filters: VehicleFilters;
+    setFilters: (filters: VehicleFilters) => void;
+    resetFilters: () => void;
+    isFiltered: boolean;
 
     // Comparison
     selectedVehicles: Vehicle[];
@@ -114,6 +123,18 @@ export function VehicleProvider({
     vehicles,
     configurationOptions = defaultConfigurationOptions,
 }: VehicleProviderProps) {
+    // Filters
+    const filterService = useMemo(() => new FilterService(), []);
+    const [filters, setFilters] = useState<VehicleFilters>({});
+
+    const filteredVehicles = useMemo(
+        () => filterService.filterVehicles(vehicles, filters),
+        [vehicles, filters, filterService],
+    );
+
+    const resetFilters = () => setFilters({});
+    const isFiltered = filteredVehicles.length !== vehicles.length;
+
     // Strategies
     const performanceStrategy = useMemo(
         () => new PerformanceScoringStrategy(),
@@ -196,6 +217,11 @@ export function VehicleProvider({
     const value = useMemo<VehicleContextValue>(
         () => ({
             vehicles,
+            filteredVehicles,
+            filters,
+            setFilters,
+            resetFilters,
+            isFiltered,
             selectedVehicles,
             comparisonResult,
             activeStrategy,
@@ -211,6 +237,9 @@ export function VehicleProvider({
         }),
         [
             vehicles,
+            filteredVehicles,
+            filters,
+            isFiltered,
             selectedVehicles,
             comparisonResult,
             activeStrategy,
