@@ -1,9 +1,4 @@
-import {
-    AutomotiveAdapter,
-    Vehicle,
-    Occasion,
-    ConfiguratorOptions,
-} from "@automotive/core";
+import { AutomotiveAdapter, Vehicle, Occasion, ConfiguratorOptions } from "@automotive/core";
 
 interface PayloadMedia {
     url?: string | null;
@@ -68,11 +63,7 @@ interface PayloadPackage {
 }
 
 interface PayloadClient {
-    find(args: {
-        collection: string;
-        where?: Record<string, unknown>;
-        limit?: number;
-    }): Promise<{ docs: unknown[] }>;
+    find(args: { collection: string; where?: Record<string, unknown>; limit?: number }): Promise<{ docs: unknown[] }>;
 }
 
 interface PayloadAdapterOptions {
@@ -112,10 +103,7 @@ export class PayloadAdapter implements AutomotiveAdapter {
                 range: doc.specs.range,
             },
             features: doc.features?.map((f) => f.feature) ?? [],
-            imageUrl:
-                doc.image && typeof doc.image === "object"
-                    ? `${this.serverUrl}${(doc.image as PayloadMedia).url}`
-                    : undefined,
+            imageUrl: doc.image && typeof doc.image === "object" ? ((doc.image as PayloadMedia).url ?? undefined) : undefined,
         })) as Vehicle[];
     }
 
@@ -139,10 +127,7 @@ export class PayloadAdapter implements AutomotiveAdapter {
             features: doc.features?.map((f) => f.feature) ?? [],
             images:
                 doc.images?.map((img) => ({
-                    url:
-                        typeof img.image === "object"
-                            ? `${this.serverUrl}${(img.image as PayloadMedia).url}`
-                            : "",
+                    url: typeof img.image === "object" && (img.image as PayloadMedia).url ? ((img.image as PayloadMedia).url ?? "") : "",
                     caption: img.caption ?? undefined,
                 })) ?? [],
             description: doc.description ?? undefined,
@@ -151,13 +136,11 @@ export class PayloadAdapter implements AutomotiveAdapter {
     }
 
     async getConfiguratorOptions(): Promise<ConfiguratorOptions> {
-        const [coloursResult, wheelsResult, packagesResult] = await Promise.all(
-            [
-                this.payload.find({ collection: "colors", limit: 50 }),
-                this.payload.find({ collection: "wheels", limit: 50 }),
-                this.payload.find({ collection: "packages", limit: 50 }),
-            ],
-        );
+        const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
+            this.payload.find({ collection: "colors", limit: 50 }),
+            this.payload.find({ collection: "wheels", limit: 50 }),
+            this.payload.find({ collection: "packages", limit: 50 }),
+        ]);
 
         return {
             colors: (coloursResult.docs as PayloadColour[]).map((doc) => ({

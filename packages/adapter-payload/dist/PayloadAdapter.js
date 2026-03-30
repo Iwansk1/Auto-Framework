@@ -28,9 +28,7 @@ class PayloadAdapter {
                 range: doc.specs.range,
             },
             features: doc.features?.map((f) => f.feature) ?? [],
-            imageUrl: doc.image && typeof doc.image === "object"
-                ? `${this.serverUrl}${doc.image.url}`
-                : undefined,
+            imageUrl: doc.image && typeof doc.image === "object" ? (doc.image.url ?? undefined) : undefined,
         }));
     }
     async getOccasions() {
@@ -51,9 +49,7 @@ class PayloadAdapter {
             condition: doc.condition,
             features: doc.features?.map((f) => f.feature) ?? [],
             images: doc.images?.map((img) => ({
-                url: typeof img.image === "object"
-                    ? `${this.serverUrl}${img.image.url}`
-                    : "",
+                url: typeof img.image === "object" && img.image.url ? (img.image.url ?? "") : "",
                 caption: img.caption ?? undefined,
             })) ?? [],
             description: doc.description ?? undefined,
