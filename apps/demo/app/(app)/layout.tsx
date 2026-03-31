@@ -21,17 +21,14 @@ export const metadata: Metadata = {
     description: "A headless automotive framework for React and Next.js",
 };
 
-export default async function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export const revalidate = 0;
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const payload = await getPayloadClient();
 
     const adapter = new PayloadAdapter({
         payload,
-        serverUrl:
-            process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:3000",
+        serverUrl: process.env.NEXT_PUBLIC_SERVER_URL ?? "http://localhost:3000",
     });
 
     const [vehicles, occasions, configuratorOptions] = await Promise.all([
@@ -42,14 +39,8 @@ export default async function RootLayout({
 
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
-                <Providers
-                    vehicles={vehicles}
-                    configuratorOptions={configuratorOptions}
-                    occasions={occasions}
-                >
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <Providers vehicles={vehicles} configuratorOptions={configuratorOptions} occasions={occasions}>
                     <Nav />
                     <main>{children}</main>
                 </Providers>

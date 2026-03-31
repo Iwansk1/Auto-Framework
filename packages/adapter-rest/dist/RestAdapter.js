@@ -3,14 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestAdapter = void 0;
 class RestAdapter {
     constructor({ baseUrl }) {
-        this.baseUrl = baseUrl.replace(/\/$/, ""); // strip trailing slash
+        if (!baseUrl) {
+            throw new Error("RestAdapter: baseUrl is required");
+        }
+        this.baseUrl = baseUrl.replace(/\/$/, "");
     }
     async fetch(path) {
-        const response = await fetch(`${this.baseUrl}${path}`);
-        if (!response.ok) {
-            throw new Error(`RestAdapter: request failed for ${path} — ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}${path}`, {
+                cache: "no-store", // prevents stale SSR caching issues
+            });
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`RestAdapter: request failed for ${path} — ${response.status}\n${text}`);
+            }
+            return response.json();
         }
-        return response.json();
+        catch (error) {
+            console.error("RestAdapter fetch error:", error);
+            throw error;
+        }
     }
     async getVehicles() {
         const result = await this.fetch("/api/vehicles?limit=100&depth=1");
@@ -57,7 +69,7 @@ class RestAdapter {
     }
     async getConfiguratorOptions() {
         const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
-            this.fetch("/api/colors?limit=50"),
+            this.fetch("/api/colours?limit=50"),
             this.fetch("/api/wheels?limit=50"),
             this.fetch("/api/packages?limit=50"),
         ]);
