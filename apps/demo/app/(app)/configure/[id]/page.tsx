@@ -3,12 +3,13 @@
 import { use, useEffect } from "react";
 import Link from "next/link";
 import { useConfigurator } from "@automotive/react";
-import { vehicles } from "../../../../data/vehicles";
+import { useVehicleComparison } from "@automotive/react";
 interface ConfigurePageProps {
     params: Promise<{ id: string }>;
 }
 
 export default function ConfigurePage({ params }: ConfigurePageProps) {
+    const { vehicles } = useVehicleComparison();
     const { id } = use(params);
     const vehicle = vehicles.find((v) => v.id === id);
 

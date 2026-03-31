@@ -1,7 +1,7 @@
 import { AutomotiveAdapter, Vehicle, Occasion, ConfiguratorOptions } from "@automotive/core";
 
 interface RestAdapterOptions {
-    baseUrl: string; // e.g. http://localhost:3000
+    baseUrl: string; // e.g. https://api.example.com
 }
 
 interface PayloadRestResponse<T> {
@@ -73,15 +73,29 @@ export class RestAdapter implements AutomotiveAdapter {
     private baseUrl: string;
 
     constructor({ baseUrl }: RestAdapterOptions) {
-        this.baseUrl = baseUrl.replace(/\/$/, ""); // strip trailing slash
+        if (!baseUrl) {
+            throw new Error("RestAdapter: baseUrl is required");
+        }
+
+        this.baseUrl = baseUrl.replace(/\/$/, "");
     }
 
     private async fetch<T>(path: string): Promise<PayloadRestResponse<T>> {
-        const response = await fetch(`${this.baseUrl}${path}`);
-        if (!response.ok) {
-            throw new Error(`RestAdapter: request failed for ${path} — ${response.status}`);
+        try {
+            const response = await fetch(`${this.baseUrl}${path}`, {
+                cache: "no-store", // prevents stale SSR caching issues
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(`RestAdapter: request failed for ${path} — ${response.status}\n${text}`);
+            }
+
+            return response.json();
+        } catch (error) {
+            console.error("RestAdapter fetch error:", error);
+            throw error;
         }
-        return response.json();
     }
 
     async getVehicles(): Promise<Vehicle[]> {
@@ -134,7 +148,7 @@ export class RestAdapter implements AutomotiveAdapter {
 
     async getConfiguratorOptions(): Promise<ConfiguratorOptions> {
         const [coloursResult, wheelsResult, packagesResult] = await Promise.all([
-            this.fetch<RestColour>("/api/colors?limit=50"),
+            this.fetch<RestColour>("/api/colours?limit=50"),
             this.fetch<RestWheel>("/api/wheels?limit=50"),
             this.fetch<RestPackage>("/api/packages?limit=50"),
         ]);
